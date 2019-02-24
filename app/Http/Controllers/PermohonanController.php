@@ -9,6 +9,7 @@ use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 Use App\Permohonan; 
+use File;
 
 class PermohonanController extends Controller
 {
@@ -105,15 +106,35 @@ class PermohonanController extends Controller
      */
     public function update(Request $request)
     {
-       // update data permohonan
-        DB::table('permohonan')->where('id',$request->id)->update([
-            'tgl_pengajuan' => $request->tgl_pengajuan,
-            'tgl_diterima_tsi' => $request->tgl_diterima_tsi,
-            'bagian' => $request->bagian,
-            'klasifikasi_perbaikan' => $request->klasifikasi_perbaikan,
-            'dokumen_pendukung' => $request->dokumen_pendukung,
-            'uraian' => $request->uraian
-        ]);
+        
+        // Disini proses mendapatkan judul dan memindahkan letak gambar ke folder image
+        if (isset($request->dokumen_pendukung)) {
+            $data = DB::table('permohonan')->where('id',$request->id)->first()->dokumen_pendukung;
+            File::delete('image/'.$data);
+
+            $file       = $request->file('dokumen_pendukung');
+            $fileName   = $file->getClientOriginalName();
+            $request->file('dokumen_pendukung')->move("image/", $fileName);
+
+            // update data permohonan
+            DB::table('permohonan')->where('id',$request->id)->update([
+                'tgl_pengajuan' => $request->tgl_pengajuan,
+                'tgl_diterima_tsi' => $request->tgl_diterima_tsi,
+                'bagian' => $request->bagian,
+                'klasifikasi_perbaikan' => $request->klasifikasi_perbaikan,
+                'dokumen_pendukung' => $fileName,
+                'uraian' => $request->uraian
+            ]);                 
+        } else {
+            DB::table('permohonan')->where('id',$request->id)->update([
+                'tgl_pengajuan' => $request->tgl_pengajuan,
+                'tgl_diterima_tsi' => $request->tgl_diterima_tsi,
+                'bagian' => $request->bagian,
+                'klasifikasi_perbaikan' => $request->klasifikasi_perbaikan,
+                'uraian' => $request->uraian
+            ]);
+        }
+        
         // alihkan halaman ke halaman permohonan
         return redirect('/permohonan');
     }
@@ -127,8 +148,9 @@ class PermohonanController extends Controller
     public function destroy($id)
     {
         // menghapus data pegawai berdasarkan id yang dipilih
+        $data = DB::table('permohonan')->where('id',$id)->first()->dokumen_pendukung;
+        File::delete('image/'.$data);
         DB::table('permohonan')->where('id',$id)->delete();
-            
         // alihkan halaman ke halaman pegawai
         return redirect('/permohonan');
     }

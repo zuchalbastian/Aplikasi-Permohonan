@@ -79,8 +79,8 @@
 
     	<div class="row">
 	        <div class="input-field col s6">
-            <button onclick="document.getElementById('getFile').click()">Edit File</button>
-            <p>{{ $p->dokumen_pendukung }}</p>
+            <button type="button" onclick="document.getElementById('getFile').click()">Edit File</button>
+            <p id="filename">{{ $p->dokumen_pendukung }}</p>
 	          <input type="file" id="getFile" name="dokumen_pendukung" class="validate" style="display: none;" / >
 	        </div>
       	</div><br>
@@ -98,4 +98,9 @@
 	@endforeach
 	</div>
 </div>
+<script>
+    document.getElementById('getFile').onchange = function () {
+        document.getElementById('filename').innerHTML = this.files.item(0).name;
+    };
+</script>
 @endsection
