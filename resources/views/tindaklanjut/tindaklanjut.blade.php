@@ -63,6 +63,8 @@
           </div>
     	</div><br>
 
+        <input type="hidden" name="id" value="{{ $p->id }}">
+
 		<div class="row">
           <div class="input-field col s12">
             <input type="text" class="validate" name="tgl_pengajuan" value="{{ $p->tgl_pengajuan }}">

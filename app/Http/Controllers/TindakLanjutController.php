@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 Use App\Daftar;
 Use App\TindakLanjut;
+Use App\Permohonan;
 
 class TindakLanjutController extends Controller
 {
@@ -68,11 +69,18 @@ class TindakLanjutController extends Controller
         $tambah->klasifikasi_perbaikan = $request['klasifikasi_perbaikan'];
 
         // Disini proses mendapatkan judul dan memindahkan letak gambar ke folder image
-        $file       = $request->file('dokumen_pendukung');
-        $fileName   = $file->getClientOriginalName();
-        $request->file('dokumen_pendukung')->move("image/", $fileName);
-
-        $tambah->dokumen_pendukung = $fileName;
+        if (isset($request['dokumen_pendukung'])) {
+            $file       = $request->file('dokumen_pendukung');
+            $fileName   = $file->getClientOriginalName();
+            $request->file('dokumen_pendukung')->move("image/", $fileName);
+    
+            $tambah->dokumen_pendukung = $fileName;
+        } else {
+                        
+            $data = DB::table('permohonan')->where('id',$request['id'])->first()->dokumen_pendukung;
+            $tambah->dokumen_pendukung = $data;
+            
+        }
 
         $tambah->uraian = $request['uraian'];
 
