@@ -48,6 +48,7 @@
                     @elseif(Auth::user()->role_id==1)
                     <li><a href="/list">Permohonan Masuk</a></li>
                     <li><a href="/list/index2">Daftar Pekerjaan Baru</a></li>
+                    <li><a href="/list/index3">Daftar Pekerjaan Terselesaikan</a></li>
                     @endif
                     <li><a href="/auth/logout">Log Out</a></li>
                 </ul>

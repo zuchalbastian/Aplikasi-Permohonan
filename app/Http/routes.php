@@ -28,6 +28,10 @@ Route::get('/list/create/{id}','TindakLanjutController@create');
 Route::post('/list/store','TindakLanjutController@store');
 
 Route::get('/list/index2','TindakLanjutController@index2');
+Route::get('/list/show/{id}','TindakLanjutController@show');
+Route::post('/list/update','TindakLanjutController@update');
+
+Route::get('/list/index3','TindakLanjutController@index3');
 
 // Authentication routes...
 Route::get('auth/login', 'LoginController@login');

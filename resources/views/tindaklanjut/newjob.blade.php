@@ -35,7 +35,7 @@
 			<td><a href="/permohonan/getDownload?filename={{$p->dokumen_pendukung}}">{{ $p->dokumen_pendukung}}</a></td>
 			<td>{{ $p->uraian }}</td>
 			<td>
-				<a href="/list/create/{{ $p->id }}" class="btn btn-sm btn-raised btn-info">Tindak Lanjut</a>
+				<a href="/list/show/{{ $p->id }}" class="btn btn-sm btn-raised btn-info">Tindak Lanjut</a>
 				<br><br>
 			</td>
 		</tr>

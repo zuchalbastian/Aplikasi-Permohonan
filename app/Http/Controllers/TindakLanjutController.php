@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 Use App\Daftar;
 Use App\TindakLanjut;
+Use App\FinishJob;
 Use App\Permohonan;
 
 class TindakLanjutController extends Controller
@@ -36,6 +37,16 @@ class TindakLanjutController extends Controller
         // mengirim data permohonan ke view permohonan
         return view('tindaklanjut/newjob',['tindaklanjut' => $daftar2]);
     }
+
+    public function index3()
+    {
+        // mengambil data dari table permohonan
+        $daftar3 = DB::table('finishjob')->get();
+ 
+        // mengirim data permohonan ke view permohonan
+        return view('tindaklanjut/finishjob',['finishjob' => $daftar3]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -98,7 +109,11 @@ class TindakLanjutController extends Controller
      */
     public function show($id)
     {
-        //
+        // mengambil data permohonan berdasarkan id yang dipilih
+        $daftar = DB::table('tindaklanjut')->where('id',$id)->get();
+        
+        // passing data permohonan yang didapat ke view edit.blade.php
+        return view('tindaklanjut/editnewjob',['tindaklanjut' => $daftar]);
     }
 
     /**
@@ -119,9 +134,23 @@ class TindakLanjutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $tambah = new FinishJob();
+        $tambah->nip_staff = $request['nip_staff'];
+        $tambah->name_staff = $request['name_staff'];
+        $tambah->bagian = $request['bagian'];
+        $tambah->klasifikasi_perbaikan = $request['klasifikasi_perbaikan'];
+        $tambah->uraian = $request['uraian'];
+
+        $tambah->tgl_analisa = $request['tgl_analisa'];
+        $tambah->hasil_analisa = $request['hasil_analisa'];
+        $tambah->tgl_selesai = $request['tgl_selesai'];
+
+         $tambah->save();
+
+        // alihkan halaman ke halaman permohonan
+        return redirect()->to('/list/index3');
     }
 
     /**
