@@ -43,7 +43,7 @@
    
  	
 	@foreach($tindaklanjut as $p)
-	 <form action="/list/update" enctype='multipart/form-data' method="post">
+	 <form action="/staff/store" enctype='multipart/form-data' method="post">
 		{{ csrf_field() }}
 
 		<legend></legend>

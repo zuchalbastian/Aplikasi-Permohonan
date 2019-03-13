@@ -9,6 +9,7 @@ use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 Use App\Permohonan; 
+Use App\Department; 
 use File;
 
 class PermohonanController extends Controller
@@ -28,6 +29,8 @@ class PermohonanController extends Controller
             return view('permohonan/index',['permohonan' => $permohonan]);
         }elseif(Auth::user()->role_id==1){
             return redirect('/list');
+        }elseif(Auth::user()->role_id==3){
+            return redirect('/staff');
         }
     }
 
@@ -38,8 +41,10 @@ class PermohonanController extends Controller
      */
     public function create()
     {
+        $department = DB::table('departments')->get();
+ 
         // memanggil view tambah
-        return view('permohonan/tambah');
+        return view('permohonan/tambah',['departments' => $department]);
     }
 
     /**

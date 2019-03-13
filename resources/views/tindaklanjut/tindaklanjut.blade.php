@@ -28,12 +28,11 @@
     <div class="panel-heading">
         <center>
         <h4>
-        FORM TAMBAH DATA PERMOHONAN
+        DATA YANG AKAN DIKIRIM
         </h4>
         </center>
     </div>
  <div class="panel-body">
-	<a href="{{ URL('list') }}" class="btn btn-raised btn-danger pull-left">Kembali</a>
 	
 	<div class="row">
             <div class="col-md-12"><br>
@@ -43,76 +42,67 @@
    
  	
 	@foreach($permohonan as $p)
-	 <form action="/list/store" enctype='multipart/form-data' method="post">
+	 <form class="form-horizontal" action="/list/store" enctype='multipart/form-data' method="post">
 		{{ csrf_field() }}
 
-		<legend></legend>
+		<!-- <legend></legend> -->
 		<fieldset>
 
-		<div class="row">
+		<div class="form-group">
+       <label for="title">NIP Staff</label>
     		<div class="input-field col s12">
-            <input type="text" class="validate" name="nip_staff" value="{{ Auth::user()->nip }}">
-            <label for="title">NIP Staff</label>
+            <input type="text" class="form-control" name="nip_staff" value="{{ Auth::user()->nip }}">
           </div>
     	</div>
 
-    	<div class="row">
+    	<div class="form-group">
+       <label for="title">Nama Staff</label>
     		<div class="input-field col s12">
-            <input type="text" class="validate" name="name_staff" value="{{ Auth::user()->name }}">
-            <label for="title">Nama Staff</label>
+            <input type="text" class="form-control" name="name_staff" value="{{ Auth::user()->name }}">
           </div>
     	</div><br>
 
         <input type="hidden" name="id" value="{{ $p->id }}">
 
-		<div class="row">
-          <div class="input-field col s12">
-            <input type="text" class="validate" name="tgl_pengajuan" value="{{ $p->tgl_pengajuan }}">
-            <label for="title">Tanggal Pengajuan</label>
-          </div>
+		<div class="form-group">
+        <label for="title">Tanggal Pengajuan : </label>
+            <span type="text" class="form-control" name="tgl_pengajuan" >{{ $p->tgl_pengajuan }}</span> 
     	</div>
 
-    	<div class="row">
-          <div class="input-field col s12">
-            <input type="text" class="validate" name="tgl_diterima_tsi" value="{{ $p->tgl_diterima_tsi }}">
-            <label for="title">Tanggal Diterima TSI</label>
-          </div>
+    	<div class="form-group">
+         <label for="title">Tanggal Diterima TSI :</label>
+            <span type="text" class="form-control" name="tgl_diterima_tsi">{{ $p->tgl_diterima_tsi }}</span>
     	</div>
 
-    	<div class="row">
-          <div class="input-field col s12">
-            <input type="text" class="validate" name="bagian" value="{{ $p->bagian }}">
-            <label for="title">Bagian</label>
-          </div>
-    	</div><br>
+    	<div class="form-group">
+          <label for="title">Bagian : </label>
+            <span type="text" class="form-control" name="tgl_diterima_tsi">{{ $p->bagian }}</span>
+    	</div>
 		
-    	<div class="row">
-        <label for="title">Klasifikasi Perbaikan</label> 
-            <div class="input-field col s12">
-                 <input type=radio name="klasifikasi_perbaikan" value="modifikasi_fitur" {{ $p->klasifikasi_perbaikan == 'modifikasi_fitur' ? 'checked' : ''}}>Modifikasi Fitur</option><br>
-                 <input type=radio name="klasifikasi_perbaikan" value="penambahan_fitur" {{ $p->klasifikasi_perbaikan == 'penambahan_fitur' ? 'checked' : ''}}>Penambahan Fitur</option><br>
-                 <input type=radio name="klasifikasi_perbaikan" value="lain_lain" {{ $p->klasifikasi_perbaikan == 'lain_lain' ? 'checked' : ''}}>Lain - Lain</option><br>
-            </div><br>
+    	<div class="form-group">
+        <label for="title">Klasifikasi Perbaikan : </label> 
+          <span type="text" class="form-control" name="tgl_diterima_tsi">{{ $p->klasifikasi_perbaikan }}</span>
     </div>
 
-		<div class="row">
-          <div class="input-field col s6">
-            <button onclick="document.getElementById('getFile').click()">Edit File</button>
-            <p>{{ $p->dokumen_pendukung }}</p>
-            <input type="file" id="getFile" name="dokumen_pendukung" class="validate" style="display: none;" / >
-          </div>
-        </div><br>
+		<div class="form-group">
+        <label for="title">Dokumen Pendukung : </label> 
+          <span type="text" class="form-control" name="tgl_diterima_tsi">{{ $p->dokumen_pendukung }}</span>
 
-		<div class="row">
-          <div class="input-field col s12">
-            <label for="title">Uraian</label>
-            <textarea type="text" class="materialize-textarea" name="uraian">{{ $p->uraian }}</textarea><br>
-          </div>
-    	</div>
-		<input type="submit" value="Simpan Data">
-		
+        </div>
+
+		<div class="form-group">
+         <label for="title">Uraian : </label>
+            <span type="text" class="form-control" name="uraian" style="resize: vertical;">{{ $p->uraian }}</span>
+    	</div><br>
+		<input class="btn btn-success" type="submit" value="Kirim Data">
+    <p></p>
+
 		</fieldset>
 	</form>
+    <a href="{{ URL('list') }}" class="btn btn-raised btn-danger pull-left">Kembali</a>
+    <div></div>
+    <button class="btn btn-info" href="#">Revisi</button>
+
 	 @endforeach
 	</div>
 </div>

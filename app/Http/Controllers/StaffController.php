@@ -1,17 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-Use App\Permohonan;
+Use App\Daftar;
 Use App\TindakLanjut;
+Use App\FinishJob;
 
-class TindakLanjutController extends Controller
+class StaffController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,10 +20,19 @@ class TindakLanjutController extends Controller
     public function index()
     {
         // mengambil data dari table permohonan
-        $daftar = DB::table('permohonan')->get();
+        $daftar2 = DB::table('tindaklanjut')->get();
  
         // mengirim data permohonan ke view permohonan
-        return view('tindaklanjut/daftar',['permohonan' => $daftar]);
+        return view('staff/newjob',['tindaklanjut' => $daftar2]);
+    }
+
+        public function index2()
+    {
+        // mengambil data dari table permohonan
+        $daftar3 = DB::table('finishjob')->get();
+ 
+        // mengirim data permohonan ke view permohonan
+        return view('staff/finishjob',['finishjob' => $daftar3]);
     }
 
 
@@ -36,11 +44,10 @@ class TindakLanjutController extends Controller
     public function create($id)
     {
         // mengambil data permohonan berdasarkan id yang dipilih
-        $daftar = DB::table('permohonan')->where('id',$id)->get();
+        $daftar = DB::table('tindaklanjut')->where('id',$id)->get();
         
         // passing data permohonan yang didapat ke view edit.blade.php
-        return view('tindaklanjut/tindaklanjut',['permohonan' => $daftar]);
-
+        return view('staff/editnewjob',['tindaklanjut' => $daftar]);
     }
 
     /**
@@ -51,34 +58,21 @@ class TindakLanjutController extends Controller
      */
     public function store(Request $request)
     {
-        $tambah = new TindakLanjut();
+        $tambah = new FinishJob();
         $tambah->nip_staff = $request['nip_staff'];
         $tambah->name_staff = $request['name_staff'];
-        $tambah->tgl_pengajuan = $request['tgl_pengajuan'];
-        $tambah->tgl_diterima_tsi = $request['tgl_diterima_tsi'];
         $tambah->bagian = $request['bagian'];
         $tambah->klasifikasi_perbaikan = $request['klasifikasi_perbaikan'];
-
-        // Disini proses mendapatkan judul dan memindahkan letak gambar ke folder image
-        if (isset($request['dokumen_pendukung'])) {
-            $file       = $request->file('dokumen_pendukung');
-            $fileName   = $file->getClientOriginalName();
-            $request->file('dokumen_pendukung')->move("image/", $fileName);
-    
-            $tambah->dokumen_pendukung = $fileName;
-        } else {
-                        
-            $data = DB::table('permohonan')->where('id',$request['id'])->first()->dokumen_pendukung;
-            $tambah->dokumen_pendukung = $data;
-            
-        }
-
         $tambah->uraian = $request['uraian'];
+
+        $tambah->tgl_analisa = $request['tgl_analisa'];
+        $tambah->hasil_analisa = $request['hasil_analisa'];
+        $tambah->tgl_selesai = $request['tgl_selesai'];
 
          $tambah->save();
 
         // alihkan halaman ke halaman permohonan
-        return redirect()->to('/list');
+        return redirect()->to('/staff/index2');
     }
 
     /**
@@ -110,7 +104,7 @@ class TindakLanjutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         //
     }

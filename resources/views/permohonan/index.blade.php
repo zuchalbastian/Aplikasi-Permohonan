@@ -20,7 +20,7 @@
 	    </center>
  	</div>
  	<div class="panel-body">
-	<a href="/permohonan/create" class="btn btn-raised btn-primary pull-left"> + Tambah Permohonan Baru</a>       
+	<a href="/permohonan/create" class="btn btn-flat btn-primary pull-left"> + Tambah Permohonan Baru</a>       
 	<br/>
 	<br/>
  
@@ -38,16 +38,26 @@
 		<tr>
 			<td>{{ $p->tgl_pengajuan }}</td>
 			<td>{{ $p->tgl_diterima_tsi }}</td>
+
 			<td>{{ $p->bagian }}</td>
+
 			<td>{{ $p->klasifikasi_perbaikan }}</td>
 			<td><a href="/permohonan/getDownload?filename={{$p->dokumen_pendukung}}">{{ $p->dokumen_pendukung}}</a></td>
 			<td>{{ $p->uraian }}</td>
 			<td>
-				<a href="/permohonan/edit/{{ $p->id }}" class="btn btn-sm btn-raised btn-info">Edit</a>
+				<a href="/permohonan/edit/{{ $p->id }}" class="btn btn-flat btn-info">Edit</a>
 				<br><br>
-				<a href="/permohonan/destroy/{{ $p->id }}" class="btn btn-sm btn-raised btn-danger">Hapus</a>
+
+				<a href="/permohonan/destroy/{{ $p->id }}" class="btn btn-flat btn-danger">Delete</a>
+			
 			</td>
 		</tr>
+<!-- 
+		<form class="delete" action="/permohonan/destroy/{{ $p->id }}" method="POST">
+	        <input type="hidden" name="_method" value="DELETE">
+	        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+	        <input type="submit" value="Delete">
+    	</form> -->
 		@endforeach
 	</table>
  

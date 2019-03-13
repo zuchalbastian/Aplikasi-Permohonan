@@ -27,11 +27,11 @@ Route::get('/list','TindakLanjutController@index');
 Route::get('/list/create/{id}','TindakLanjutController@create');
 Route::post('/list/store','TindakLanjutController@store');
 
-Route::get('/list/index2','TindakLanjutController@index2');
-Route::get('/list/show/{id}','TindakLanjutController@show');
-Route::post('/list/update','TindakLanjutController@update');
+Route::get('/staff','StaffController@index');
+Route::get('/staff/create/{id}','StaffController@create');
+Route::post('/staff/store','StaffController@store');
 
-Route::get('/list/index3','TindakLanjutController@index3');
+Route::get('/staff/index2','StaffController@index2');
 
 // Authentication routes...
 Route::get('auth/login', 'LoginController@login');

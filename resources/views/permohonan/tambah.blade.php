@@ -1,23 +1,5 @@
 @section('js')
-<script type="text/javascript">
-
-      function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#showgambar').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $("#inputgambar").change(function () {
-        readURL(this);
-    });
-
-</script>
+    
 
 @stop
 
@@ -33,7 +15,6 @@
         </center>
     </div>
     <div class="panel-body">
-        <a href="{{ URL('permohonan') }}" class="btn btn-raised btn-danger pull-left">Kembali</a>
         <div class="row">
             <div class="col-md-12"><br>
                 <div class="col-md-2"></div>
@@ -42,14 +23,14 @@
 			<form action="/permohonan/store" enctype='multipart/form-data' method="post">
 				{{ csrf_field() }}
 
-				<legend></legend>
-		        <fieldset>
+				<!-- <legend></legend> -->
+		        <fieldset>	
 
 		            <div class="form-group label-floating">
 		            	<span class="control-label" for="focusedInput2">Tanggal Pengajuan</span>
-		            	<input class="form-control" type="date" name="tgl_pengajuan" required="required">
+		            	<input class="form-control" id="date" name="tgl_pengajuan" required="required">
 		            	<p class="help-block"></p>
-		            </div>		
+		            </div>
 
 		            <div class="form-group label-floating">
 		            	<span class="control-label" for="focusedInput2">Tanggal Diterima TSI</span>
@@ -59,7 +40,18 @@
 
 		            <div class="form-group label-floating">
 		            	<span class="control-label" for="focusedInput2">Bagian</span>
-		            	<input class="form-control" type="text" name="bagian" required="required">
+		            	<select name="bagian" class="form-control">
+		            		@foreach ($departments as $p)
+		            			<option 
+		            				value="{{ $p->id }}"
+		            				@if ($p->id)
+		            					selected
+		            				@endif
+		            			>
+		            				{{ $p->name }}
+		            			</option>
+		            		@endforeach
+		            	</select>
 		           		<p class="help-block"></p>
 		           	</div>	
 
@@ -97,7 +89,10 @@
 		                <span class="help-block"></span>
 		            </div><br>
 
-					<input type="submit" value="Simpan Data">
+					<input class="btn btn-success" type="submit" value="Simpan Data">
+					<p></p>
+        			<a href="{{ URL('permohonan') }}" class="btn btn-raised btn-danger pull-left">Kembali</a>
+				
 				</fieldset>
 			</form>
 	 	</div>
