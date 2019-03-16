@@ -14,8 +14,7 @@ class CreateTindaklanjutTable extends Migration
     {
         Schema::create('tindaklanjut', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('nip_staff')->unsigned();
-            $table->string('name_staff');
+            $table->integer('user_id')->unsigned();
             $table->date('tgl_pengajuan');
             $table->date('tgl_diterima_tsi');
             $table->text('bagian');

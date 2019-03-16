@@ -51,6 +51,7 @@
 		<div class="form-group">
        <label for="title">NIP Staff</label>
     		<div class="input-field col s12">
+            <input id="id_staff" type="hidden" class="form-control" name="id_staff">
             <input id="nip_staff" type="text" class="form-control" name="nip_staff" disabled>
           </div>
     	</div>
@@ -59,8 +60,8 @@
        <label for="title">Nama Staff</label>
     		<div class="input-field col s12">
                 <select id="name_staff" name="name_staff" onchange="change();">
-                    @foreach ($staffs as $staff)
-                        <option value="{{ $staff->nip }}">{{ $staff->name }}</option>
+                    @foreach ($staffs as $index => $staff)
+                        <option value="{{ $index }}">{{ $staff->name }}</option>
                     @endforeach
                 </select>
           </div>
@@ -70,32 +71,37 @@
 
 		<div class="form-group">
         <label for="title">Tanggal Pengajuan : </label>
+            <input type="hidden" name="tgl_pengajuan" value="{{ $p->tgl_pengajuan }}">
             <span type="text" class="form-control" name="tgl_pengajuan" >{{ $p->tgl_pengajuan }}</span> 
     	</div>
 
     	<div class="form-group">
          <label for="title">Tanggal Diterima TSI :</label>
+            <input type="hidden" name="tgl_diterima_tsi" value="{{ $p->tgl_diterima_tsi }}">
             <span type="text" class="form-control" name="tgl_diterima_tsi">{{ $p->tgl_diterima_tsi }}</span>
     	</div>
 
     	<div class="form-group">
           <label for="title">Bagian : </label>
-            <span type="text" class="form-control" name="tgl_diterima_tsi">{{ $p->bagian }}</span>
+            <input type="hidden" name="bagian" value="{{ $p->bagian }}">
+            <span type="text" class="form-control" name="bagian">{{ $p->bagian }}</span>
     	</div>
 		
     	<div class="form-group">
         <label for="title">Klasifikasi Perbaikan : </label> 
-          <span type="text" class="form-control" name="tgl_diterima_tsi">{{ $p->klasifikasi_perbaikan }}</span>
+            <input type="hidden" name="klasifikasi_perbaikan" value="{{ $p->klasifikasi_perbaikan }}">
+            <span type="text" class="form-control" name="klasifikasi_perbaikan">{{ $p->klasifikasi_perbaikan }}</span>
     </div>
 
 		<div class="form-group">
         <label for="title">Dokumen Pendukung : </label> 
-          <span type="text" class="form-control" name="tgl_diterima_tsi">{{ $p->dokumen_pendukung }}</span>
+            <span type="text" class="form-control" name="dokumen_pendukung">{{ $p->dokumen_pendukung }}</span>
 
         </div>
 
 		<div class="form-group">
          <label for="title">Uraian : </label>
+            <input type="hidden" name="uraian" value="{{ $p->uraian }}">
             <span type="text" class="form-control" name="uraian" style="resize: vertical;">{{ $p->uraian }}</span>
     	</div><br>
 		<input class="btn btn-success" type="submit" value="Kirim Data">
@@ -111,10 +117,12 @@
 	</div>
 </div>
 <script>
+    var staffs = {!! $staffs !!};
     change();
     function change() {
         var value = document.getElementById('name_staff').value;
-        document.getElementById('nip_staff').value = value;
+        document.getElementById('id_staff').value = staffs[value].id;
+        document.getElementById('nip_staff').value = staffs[value].nip;
     }
 </script>
 @endsection

@@ -55,8 +55,7 @@ class TindakLanjutController extends Controller
     public function store(Request $request)
     {
         $tambah = new TindakLanjut();
-        $tambah->nip_staff = $request['nip_staff'];
-        $tambah->name_staff = $request['name_staff'];
+        $tambah->user_id = $request['id_staff'];
         $tambah->tgl_pengajuan = $request['tgl_pengajuan'];
         $tambah->tgl_diterima_tsi = $request['tgl_diterima_tsi'];
         $tambah->bagian = $request['bagian'];
