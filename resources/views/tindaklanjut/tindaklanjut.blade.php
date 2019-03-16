@@ -51,14 +51,18 @@
 		<div class="form-group">
        <label for="title">NIP Staff</label>
     		<div class="input-field col s12">
-            <input type="text" class="form-control" name="nip_staff" value="{{ Auth::user()->nip }}">
+            <input id="nip_staff" type="text" class="form-control" name="nip_staff" disabled>
           </div>
     	</div>
 
     	<div class="form-group">
        <label for="title">Nama Staff</label>
     		<div class="input-field col s12">
-            <input type="text" class="form-control" name="name_staff" value="{{ Auth::user()->name }}">
+                <select id="name_staff" name="name_staff" onchange="change();">
+                    @foreach ($staffs as $staff)
+                        <option value="{{ $staff->nip }}">{{ $staff->name }}</option>
+                    @endforeach
+                </select>
           </div>
     	</div><br>
 
@@ -106,4 +110,11 @@
 	 @endforeach
 	</div>
 </div>
+<script>
+    change();
+    function change() {
+        var value = document.getElementById('name_staff').value;
+        document.getElementById('nip_staff').value = value;
+    }
+</script>
 @endsection

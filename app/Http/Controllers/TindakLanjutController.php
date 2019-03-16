@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 Use App\Permohonan;
+Use App\User;
 Use App\TindakLanjut;
 
 class TindakLanjutController extends Controller
@@ -38,8 +39,10 @@ class TindakLanjutController extends Controller
         // mengambil data permohonan berdasarkan id yang dipilih
         $daftar = DB::table('permohonan')->where('id',$id)->get();
         
+        $staffs = User::where('role_id', 3)->get();
+
         // passing data permohonan yang didapat ke view edit.blade.php
-        return view('tindaklanjut/tindaklanjut',['permohonan' => $daftar]);
+        return view('tindaklanjut/tindaklanjut',['permohonan' => $daftar, 'staffs' => $staffs]);
 
     }
 
