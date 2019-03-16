@@ -177,7 +177,7 @@
       $('#date').datepicker({dateFormat: 'dd/mm/yy'});
     });;
 
-    $(".delete").on("submit", function(){
+    $(".delete").on("click", function(){
         return confirm("Do you want to delete this item?");
     });
     </script>

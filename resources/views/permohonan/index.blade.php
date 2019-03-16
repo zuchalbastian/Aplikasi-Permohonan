@@ -48,7 +48,7 @@
 				<a href="/permohonan/edit/{{ $p->id }}" class="btn btn-flat btn-info">Edit</a>
 				<br><br>
 
-				<a href="/permohonan/destroy/{{ $p->id }}" class="btn btn-flat btn-danger">Delete</a>
+				<a href="/permohonan/destroy/{{ $p->id }}" class="btn btn-flat btn-danger delete">Delete</a>
 			
 			</td>
 		</tr>
