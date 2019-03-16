@@ -14,8 +14,6 @@
 
 	<table border="1"  class="table table-bordered table-hover ">
 		<tr>
-			<th>NIP Staff</th>
-			<th>Nama Staff</th>
 			<th>Tanggal Pengajuan</th>
 			<th>Tanggal Diterima TSI</th>
 			<th>Bagian</th>
@@ -26,8 +24,6 @@
 		</tr>
 		@foreach($tindaklanjut as $p)
 		<tr>
-			<td>{{ $p->nip_staff }}</td>
-			<td>{{ $p->name_staff }}</td>
 			<td>{{ $p->tgl_pengajuan }}</td>
 			<td>{{ $p->tgl_diterima_tsi }}</td>
 			<td>{{ $p->bagian }}</td>

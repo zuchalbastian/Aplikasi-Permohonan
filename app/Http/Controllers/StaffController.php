@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 Use App\Daftar;
 Use App\TindakLanjut;
 Use App\FinishJob;
+use Auth;
 
 class StaffController extends Controller
 {
@@ -20,7 +21,7 @@ class StaffController extends Controller
     public function index()
     {
         // mengambil data dari table permohonan
-        $daftar2 = DB::table('tindaklanjut')->get();
+        $daftar2 = DB::table('tindaklanjut')->where('user_id', Auth::user()->id)->get();
  
         // mengirim data permohonan ke view permohonan
         return view('staff/newjob',['tindaklanjut' => $daftar2]);
