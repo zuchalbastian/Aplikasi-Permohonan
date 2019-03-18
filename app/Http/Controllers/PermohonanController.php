@@ -22,8 +22,8 @@ class PermohonanController extends Controller
     public function index()
     {
         // mengambil data dari table permohonan
-        $permohonan = DB::table('permohonan')->get();
- 
+        $permohonan = Permohonan::with('get_department')->get();
+       
         // mengirim data permohonan ke view permohonan
         if(Auth::user()->role_id==2){
             return view('permohonan/index',['permohonan' => $permohonan]);

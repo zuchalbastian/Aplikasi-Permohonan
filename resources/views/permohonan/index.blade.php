@@ -39,7 +39,9 @@
 			<td>{{ $p->tgl_pengajuan }}</td>
 			<td>{{ $p->tgl_diterima_tsi }}</td>
 
-			<td>{{ $p->bagian }}</td>
+			<td>
+				{{ $p->get_department->name }}
+			</td>
 
 			<td>{{ $p->klasifikasi_perbaikan }}</td>
 			<td><a href="/permohonan/getDownload?filename={{$p->dokumen_pendukung}}">{{ $p->dokumen_pendukung}}</a></td>

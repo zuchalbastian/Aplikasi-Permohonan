@@ -10,4 +10,8 @@ class Permohonan extends Model
 	protected $primaryKey = 'id';
 	protected $fillable = ['tgl_pengajuan', 'tgl_diterima_tsi', 'bagian', 'klasifikasi_perbaikan', 'dokumen_pendukung', 'uraian'];
 	public $timestamps = false;
+
+	public function get_department(){
+    	return $this->belongsTo('App\\Department', 'bagian', 'id');
+    }
 }

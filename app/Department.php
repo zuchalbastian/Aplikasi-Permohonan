@@ -10,4 +10,8 @@ class Department extends Model
 	protected $primaryKey = 'id';
 	protected $fillable = ['name', 'slug'];
 	public $timestamps = false;
+
+	public function get_permohonan(){
+    	return $this->hasMany('App\\Permohonan', 'bagian', 'id');
+    }
 }
