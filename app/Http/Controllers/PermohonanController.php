@@ -97,11 +97,16 @@ class PermohonanController extends Controller
     public function edit($id)
     {
         // mengambil data permohonan berdasarkan id yang dipilih
-        $permohonan = Permohonan::with('get_department')->where('id',$id)->get();
+        // $permohonan = Permohonan::with('get_department')->where('id',$id)->get();
+        $permohonan = Permohonan::leftJoin('departments', 'permohonan.bagian', '=', 'departments.id')
+                      ->where('permohonan.id', $id)
+                      ->first();
+        // $permohonan->id;
 
         $departments = DB::table('departments')->get();
+        // $departments[3]->id
         // passing data permohonan yang didapat ke view edit.blade.php
-        return view('permohonan/edit',['permohonan' => $permohonan, 'department' => $departments]);
+        return view('permohonan/edit',['p' => $permohonan, 'department' => $departments]);
     }
 
     /**
@@ -130,7 +135,8 @@ class PermohonanController extends Controller
                 'bagian' => $request->bagian,
                 'klasifikasi_perbaikan' => $request->klasifikasi_perbaikan,
                 'dokumen_pendukung' => $fileName,
-                'uraian' => $request->uraian
+                'uraian' => $request->uraian,
+                // 'status' => 'revisi'
             ]);                 
         } else {
             DB::table('permohonan')->where('id',$request->id)->update([
@@ -138,7 +144,8 @@ class PermohonanController extends Controller
                 'tgl_diterima_tsi' => $request->tgl_diterima_tsi,
                 'bagian' => $request->bagian,
                 'klasifikasi_perbaikan' => $request->klasifikasi_perbaikan,
-                'uraian' => $request->uraian
+                'uraian' => $request->uraian,
+                // 'status' => 'revisi'
             ]);
         }
         

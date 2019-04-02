@@ -20,6 +20,7 @@ class CreatePermohonanTable extends Migration
             $table->text('klasifikasi_perbaikan');
             $table->text('dokumen_pendukung');
             $table->text('uraian');
+            $table->string('status')->default('baru');
         });
     }
 

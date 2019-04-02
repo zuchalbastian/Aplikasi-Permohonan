@@ -53,7 +53,7 @@
                 <div class="col-md-2"></div>
              	<div class="col-md-8">
  
-	@foreach($permohonan as $p)
+	{{-- @foreach($permohonan as $p) --}}
 	<form action="{{ url('permohonan/update') }}" enctype='multipart/form-data' method="post">
 		{{ csrf_field() }}
 
@@ -81,11 +81,11 @@
           @foreach ($department as $z)
             <option 
             value="{{ $z->id }}"
-            @if ($z->id)
+            @if ($z->id==$p->id)
               selected
             @endif
           >
-            {{ $p->get_department->name }}
+            {{ $z->name }} 
           </option>
           @endforeach
         </select>
@@ -121,7 +121,7 @@
 
 		</fieldset>
 	</form>
-	@endforeach
+	{{-- @endforeach --}}
 	</div>
 </div>
 <script>
