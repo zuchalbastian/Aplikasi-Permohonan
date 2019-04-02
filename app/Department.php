@@ -13,5 +13,13 @@ class Department extends Model
 
 	public function get_permohonan(){
     	return $this->hasMany('App\\Permohonan', 'bagian', 'id');
+	}
+	
+	public function get_tindaklanjut(){
+    	return $this->hasMany('App\\TindakLanjut', 'bagian', 'id');
+	}
+	
+	public function get_finishjob(){
+    	return $this->hasMany('App\\FinishJob', 'bagian', 'id');
     }
 }

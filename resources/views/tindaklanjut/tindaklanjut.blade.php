@@ -59,7 +59,7 @@
     	<div class="form-group">
        <label for="title">Nama Staff</label>
     		<div class="input-field col s12">
-                <select id="name_staff" name="name_staff" onchange="change();">
+                <select id="name_staff" name="name_staff" class="form-control" onchange="change();">
                     @foreach ($staffs as $index => $staff)
                         <option value="{{ $index }}">{{ $staff->name }}</option>
                     @endforeach
@@ -81,17 +81,29 @@
             <span type="text" class="form-control" name="tgl_diterima_tsi">{{ $p->tgl_diterima_tsi }}</span>
     	</div>
 
-    	<div class="form-group">
-          <label for="title">Bagian : </label>
-            <input type="hidden" name="bagian" value="{{ $p->bagian }}">
-            <span type="text" class="form-control" name="bagian">{{ $p->bagian }}</span>
-    	</div>
+    	<div class="form-group label-floating">
+            <span class="control-label" for="focusedInput2">Bagian</span>
+            <select name="bagian" class="form-control">
+              
+              @foreach ($department as $z)
+                <option 
+                value="{{ $z->id }}"
+                @if ($z->id)
+                  selected
+                @endif
+              >
+                {{ $p->get_department->name }}
+              </option>
+              @endforeach
+            </select>
+             <p class="help-block"></p>
+           </div>	
 		
     	<div class="form-group">
         <label for="title">Klasifikasi Perbaikan : </label> 
             <input type="hidden" name="klasifikasi_perbaikan" value="{{ $p->klasifikasi_perbaikan }}">
             <span type="text" class="form-control" name="klasifikasi_perbaikan">{{ $p->klasifikasi_perbaikan }}</span>
-    </div>
+        </div>
 
 		<div class="form-group">
         <label for="title">Dokumen Pendukung : </label> 

@@ -97,9 +97,11 @@ class PermohonanController extends Controller
     public function edit($id)
     {
         // mengambil data permohonan berdasarkan id yang dipilih
-        $permohonan = DB::table('permohonan')->where('id',$id)->get();
+        $permohonan = Permohonan::with('get_department')->where('id',$id)->get();
+
+        $departments = DB::table('departments')->get();
         // passing data permohonan yang didapat ke view edit.blade.php
-        return view('permohonan/edit',['permohonan' => $permohonan]);
+        return view('permohonan/edit',['permohonan' => $permohonan, 'department' => $departments]);
     }
 
     /**

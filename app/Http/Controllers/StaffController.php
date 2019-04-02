@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-Use App\Daftar;
 Use App\TindakLanjut;
 Use App\FinishJob;
+Use App\User;
 use Auth;
 
 class StaffController extends Controller
@@ -21,7 +21,7 @@ class StaffController extends Controller
     public function index()
     {
         // mengambil data dari table permohonan
-        $daftar2 = DB::table('tindaklanjut')->where('user_id', Auth::user()->id)->get();
+        $daftar2 = TindakLanjut::with('get_department')->where('user_id', Auth::user()->id)->get();
  
         // mengirim data permohonan ke view permohonan
         return view('staff/newjob',['tindaklanjut' => $daftar2]);
@@ -30,7 +30,7 @@ class StaffController extends Controller
         public function index2()
     {
         // mengambil data dari table permohonan
-        $daftar3 = DB::table('finishjob')->get();
+        $daftar3 = FinishJob::with('get_department')->where('user_id', Auth::user()->id)->get();
  
         // mengirim data permohonan ke view permohonan
         return view('staff/finishjob',['finishjob' => $daftar3]);
@@ -45,10 +45,14 @@ class StaffController extends Controller
     public function create($id)
     {
         // mengambil data permohonan berdasarkan id yang dipilih
-        $daftar = DB::table('tindaklanjut')->where('id',$id)->get();
+        $daftar = TindakLanjut::with('get_department')->where('id',$id)->get();
+
+        $staffs = User::where('role_id', 3)->get();
+
+        $departments = DB::table('departments')->get();
         
         // passing data permohonan yang didapat ke view edit.blade.php
-        return view('staff/editnewjob',['tindaklanjut' => $daftar]);
+        return view('staff/editnewjob',['tindaklanjut' => $daftar,  'staffs' => $staffs, 'department' => $departments]);
     }
 
     /**
@@ -60,8 +64,7 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         $tambah = new FinishJob();
-        $tambah->nip_staff = $request['nip_staff'];
-        $tambah->name_staff = $request['name_staff'];
+        $tambah->user_id = $request['id_staff'];
         $tambah->bagian = $request['bagian'];
         $tambah->klasifikasi_perbaikan = $request['klasifikasi_perbaikan'];
         $tambah->uraian = $request['uraian'];

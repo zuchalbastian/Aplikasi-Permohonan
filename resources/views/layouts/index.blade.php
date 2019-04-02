@@ -39,7 +39,7 @@
 
 
     <!-- Bootstrap core CSS -->
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
     <!-- <link href="/{{ URL::asset('css/default.css') }}" rel="stylesheet"> -->
     <!-- <link href="/{{ URL::asset('css/default.date.css') }}" rel="stylesheet"> -->
@@ -56,11 +56,10 @@
 </head>
 
 <body style="height: auto;">
-    <div class="wrapper" style="height: auto;">
-    <header class="main-header">
+    
     <nav class="navbar navbar-default">
         <div class="container">
-            <div class="navbar-header">
+
                 <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -157,8 +156,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <!-- <script src="/{{ URL::asset('js/jquery.1.7.0.js') }}"></script> -->
     <!-- <script src="/{{ URL::asset('js/legacy.js') }}"></script> -->
     <!-- <script src="/{{ URL::asset('js/picker.date.js') }}"></script> -->

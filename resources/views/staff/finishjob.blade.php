@@ -14,8 +14,6 @@
 
 	<table border="1"  class="table table-bordered table-hover ">
 		<tr>
-			<th>NIP Staff</th>
-			<th>Nama Staff</th>
 			<th>Bagian</th>
 			<th>Klasifikasi Perbaikan</th>
 			<th>Uraian</th>
@@ -26,16 +24,14 @@
 		</tr>
 		@foreach($finishjob as $p)
 		<tr>
-			<td>{{ $p->nip_staff }}</td>
-			<td>{{ $p->name_staff }}</td>
-			<td>{{ $p->bagian }}</td>
+			<td>{{ $p->get_department->name }}</td>
 			<td>{{ $p->klasifikasi_perbaikan }}</td>
 			<td>{{ $p->uraian }}</td>
 			<td>{{ $p->tgl_analisa }}</td>
 			<td>{{ $p->hasil_analisa }}</td>
 			<td>{{ $p->tgl_selesai }}</td>
 			<td>
-				<!-- <a href="#" class="btn btn-sm btn-raised btn-info">Tindak Lanjut</a> -->
+				<a href="#" class="btn btn-sm btn-raised btn-info">Send</a>
 				<br><br>
 			</td>
 		</tr>

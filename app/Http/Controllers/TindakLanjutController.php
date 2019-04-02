@@ -22,7 +22,7 @@ class TindakLanjutController extends Controller
     public function index()
     {
         // mengambil data dari table permohonan
-        $daftar = DB::table('permohonan')->get();
+        $daftar = Permohonan::with('get_department')->get();
  
         // mengirim data permohonan ke view permohonan
         return view('tindaklanjut/daftar',['permohonan' => $daftar]);
@@ -37,12 +37,14 @@ class TindakLanjutController extends Controller
     public function create($id)
     {
         // mengambil data permohonan berdasarkan id yang dipilih
-        $daftar = DB::table('permohonan')->where('id',$id)->get();
+        $daftar = Permohonan::with('get_department')->where('id',$id)->get();
         
         $staffs = User::where('role_id', 3)->get();
 
+        $departments = DB::table('departments')->get();
+
         // passing data permohonan yang didapat ke view edit.blade.php
-        return view('tindaklanjut/tindaklanjut',['permohonan' => $daftar, 'staffs' => $staffs]);
+        return view('tindaklanjut/tindaklanjut',['permohonan' => $daftar, 'staffs' => $staffs, 'department' => $departments]);
 
     }
 

@@ -14,8 +14,7 @@ class CreateFinishjobTable extends Migration
     {
         Schema::create('finishjob', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('nip_staff')->unsigned();
-            $table->string('name_staff');
+            $table->integer('user_id')->unsigned();
             $table->text('bagian');
             $table->text('klasifikasi_perbaikan');
             $table->text('uraian');

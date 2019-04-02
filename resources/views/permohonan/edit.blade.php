@@ -74,12 +74,23 @@
           </div>
     	</div>
 
-    	<div class="form-group">
-          <label for="title">Bagian</label>
-          <div class="form-group">
-            <input type="text" class="form-control" name="bagian" value="{{ $p->bagian }}">
-          </div>
-    	</div>
+    	<div class="form-group label-floating">
+        <span class="control-label" for="focusedInput2">Bagian</span>
+        <select name="bagian" class="form-control">
+          
+          @foreach ($department as $z)
+            <option 
+            value="{{ $z->id }}"
+            @if ($z->id)
+              selected
+            @endif
+          >
+            {{ $p->get_department->name }}
+          </option>
+          @endforeach
+        </select>
+         <p class="help-block"></p>
+       </div>	
 
     <div class="form-group">
       <label for="title">Klasifikasi Perbaikan</label> 
