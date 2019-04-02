@@ -53,24 +53,23 @@
                 <div class="col-md-2"></div>
              	<div class="col-md-8">
  
-	{{-- @foreach($permohonan as $p) --}}
 	<form action="{{ url('permohonan/update') }}" enctype='multipart/form-data' method="post">
 		{{ csrf_field() }}
 
 		<!-- <legend></legend> -->
 		<fieldset>
-      <input type="hidden" name="id" value="{{ $p->id }}">
+      <input type="hidden" name="id" value={{ $permohonan->id }}>
 		<div class="form-group">
           <label for="title">Tanggal Pengajuan</label>
           <div class="input-field col s13">
-            <input type="text" class="form-control" name="tgl_pengajuan" value="{{ $p->tgl_pengajuan }}">
+            <input type="text" class="form-control" name="tgl_pengajuan" value="{{ $permohonan->tgl_pengajuan }}">
           </div>
     	</div>
 
     	<div class="form-group">
           <label for="title">Tanggal Diterima TSI</label>
           <div class="input-field col s13">
-            <input type="text" class="form-control" name="tgl_diterima_tsi" value="{{ $p->tgl_diterima_tsi }}">
+            <input type="text" class="form-control" name="tgl_diterima_tsi" value="{{ $permohonan->tgl_diterima_tsi }}">
           </div>
     	</div>
 
@@ -81,7 +80,7 @@
           @foreach ($department as $z)
             <option 
             value="{{ $z->id }}"
-            @if ($z->id==$p->id)
+            @if ($z->id==$permohonan->department)
               selected
             @endif
           >
@@ -95,16 +94,16 @@
     <div class="form-group">
       <label for="title">Klasifikasi Perbaikan</label> 
             <div class="input-field col s12">
-                 <input type=radio name="klasifikasi_perbaikan" value="modifikasi_fitur" {{ $p->klasifikasi_perbaikan == 'modifikasi_fitur' ? 'checked' : ''}}>Modifikasi Fitur</option><br>
-                 <input type=radio name="klasifikasi_perbaikan" value="penambahan_fitur" {{ $p->klasifikasi_perbaikan == 'penambahan_fitur' ? 'checked' : ''}}>Penambahan Fitur</option><br>
-                 <input type=radio name="klasifikasi_perbaikan" value="lain_lain" {{ $p->klasifikasi_perbaikan == 'lain_lain' ? 'checked' : ''}}>Lain - Lain</option><br>
+                 <input type=radio name="klasifikasi_perbaikan" value="modifikasi_fitur" {{ $permohonan->klasifikasi_perbaikan == 'modifikasi_fitur' ? 'checked' : ''}}>Modifikasi Fitur</option><br>
+                 <input type=radio name="klasifikasi_perbaikan" value="penambahan_fitur" {{ $permohonan->klasifikasi_perbaikan == 'penambahan_fitur' ? 'checked' : ''}}>Penambahan Fitur</option><br>
+                 <input type=radio name="klasifikasi_perbaikan" value="lain_lain" {{ $permohonan->klasifikasi_perbaikan == 'lain_lain' ? 'checked' : ''}}>Lain - Lain</option><br>
             </div><br>
     </div>
 
     	<div class="form-group">
 	        <div class="input-field col s6">
             <button type="button" onclick="document.getElementById('getFile').click()">Edit File</button>
-            <p id="filename">{{ $p->dokumen_pendukung }}</p>
+            <p id="filename">{{ $permohonan->dokumen_pendukung }}</p>
 	          <input type="file" id="getFile" name="dokumen_pendukung" class="validate" style="display: none;" / >
 	        </div>
       	</div><br>
@@ -112,7 +111,7 @@
 		<div class="form-group">
           <label for="title">Uraian</label>
           <div class="input-field col s12">
-            <textarea type="text" class="form-control" name="uraian" rows="3">{{ $p->uraian }}</textarea>
+            <textarea type="text" class="form-control" name="uraian" rows="3">{{ $permohonan->uraian }}</textarea>
           </div>
     	</div>
 		<input class="btn btn-success" type="submit" value="Simpan Data">
@@ -121,7 +120,6 @@
 
 		</fieldset>
 	</form>
-	{{-- @endforeach --}}
 	</div>
 </div>
 <script>

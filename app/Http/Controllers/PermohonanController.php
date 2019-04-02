@@ -98,7 +98,8 @@ class PermohonanController extends Controller
     {
         // mengambil data permohonan berdasarkan id yang dipilih
         // $permohonan = Permohonan::with('get_department')->where('id',$id)->get();
-        $permohonan = Permohonan::leftJoin('departments', 'permohonan.bagian', '=', 'departments.id')
+        $permohonan = Permohonan::select('permohonan.*', 'departments.id as department', 'departments.name')
+                      ->leftJoin('departments', 'permohonan.bagian', '=', 'departments.id')
                       ->where('permohonan.id', $id)
                       ->first();
         // $permohonan->id;
@@ -106,7 +107,7 @@ class PermohonanController extends Controller
         $departments = DB::table('departments')->get();
         // $departments[3]->id
         // passing data permohonan yang didapat ke view edit.blade.php
-        return view('permohonan/edit',['p' => $permohonan, 'department' => $departments]);
+        return view('permohonan/edit',['permohonan' => $permohonan, 'department' => $departments]);
     }
 
     /**
@@ -118,7 +119,6 @@ class PermohonanController extends Controller
      */
     public function update(Request $request)
     {
-        
         // Disini proses mendapatkan judul dan memindahkan letak gambar ke folder image
         if (isset($request->dokumen_pendukung)) {
             $data = DB::table('permohonan')->where('id',$request->id)->first()->dokumen_pendukung;
@@ -129,23 +129,24 @@ class PermohonanController extends Controller
             $request->file('dokumen_pendukung')->move("image/", $fileName);
 
             // update data permohonan
-            DB::table('permohonan')->where('id',$request->id)->update([
+            // $permohonan = Permohonan::find($request->id)
+            Permohonan::where('id',$request->id)->update([
                 'tgl_pengajuan' => $request->tgl_pengajuan,
                 'tgl_diterima_tsi' => $request->tgl_diterima_tsi,
                 'bagian' => $request->bagian,
                 'klasifikasi_perbaikan' => $request->klasifikasi_perbaikan,
                 'dokumen_pendukung' => $fileName,
                 'uraian' => $request->uraian,
-                // 'status' => 'revisi'
+                'status' => 'revisi'
             ]);                 
         } else {
-            DB::table('permohonan')->where('id',$request->id)->update([
+            Permohonan::where('id',$request->id)->update([
                 'tgl_pengajuan' => $request->tgl_pengajuan,
                 'tgl_diterima_tsi' => $request->tgl_diterima_tsi,
                 'bagian' => $request->bagian,
                 'klasifikasi_perbaikan' => $request->klasifikasi_perbaikan,
                 'uraian' => $request->uraian,
-                // 'status' => 'revisi'
+                'status' => 'revisi'
             ]);
         }
         
