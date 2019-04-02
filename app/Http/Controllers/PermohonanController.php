@@ -98,7 +98,8 @@ class PermohonanController extends Controller
     {
         // mengambil data permohonan berdasarkan id yang dipilih
         // $permohonan = Permohonan::with('get_department')->where('id',$id)->get();
-        $permohonan = Permohonan::select('permohonan.*', 'departments.id as department', 'departments.name')
+        $permohonan = DB::table('permohonan')
+                      ->select('permohonan.*', 'departments.id as department', 'departments.name')
                       ->leftJoin('departments', 'permohonan.bagian', '=', 'departments.id')
                       ->where('permohonan.id', $id)
                       ->first();

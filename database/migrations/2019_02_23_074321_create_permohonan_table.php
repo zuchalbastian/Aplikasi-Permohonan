@@ -16,7 +16,7 @@ class CreatePermohonanTable extends Migration
             $table->increments('id');
             $table->date('tgl_pengajuan');
             $table->date('tgl_diterima_tsi');
-            $table->text('bagian');
+            $table->integer('bagian');
             $table->text('klasifikasi_perbaikan');
             $table->text('dokumen_pendukung');
             $table->text('uraian');

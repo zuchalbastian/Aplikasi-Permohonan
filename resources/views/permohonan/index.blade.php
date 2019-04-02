@@ -32,6 +32,7 @@
 			<th>Klasifikasi Perbaikan</th>
 			<th>Dokumen Pendukung</th>
 			<th>Uraian</th>
+			<th>Status</th>
 			<th>Opsi</th>
 		</tr>
 		@foreach($permohonan as $p)
@@ -46,6 +47,7 @@
 			<td>{{ $p->klasifikasi_perbaikan }}</td>
 			<td><a href="/permohonan/getDownload?filename={{$p->dokumen_pendukung}}">{{ $p->dokumen_pendukung}}</a></td>
 			<td>{{ $p->uraian }}</td>
+			<td>{{ $p->status }}</td>			
 			<td>
 				<a href="/permohonan/edit/{{ $p->id }}" class="btn btn-flat btn-info">Edit</a>
 				<br><br>
