@@ -16,6 +16,13 @@ class LoginController extends Controller
     }
     public function authentication(Request $request)
     {
+        $this->validate($request, [
+            'nip' => 'required',
+            'password' => 'required',
+            'captcha' => 'required|captcha'
+        ],
+        ['captcha.captcha'=>'Invalid captcha code.']);
+
         $credentials = $request->only('nip', 'password');
         if (Auth::attempt($credentials)) {
             // dd(Auth::user()->role_id);

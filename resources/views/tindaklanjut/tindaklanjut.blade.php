@@ -41,7 +41,6 @@
 
    
  	
-	@foreach($permohonan as $p)
 	 <form class="form-horizontal" action="/list/store" enctype='multipart/form-data' method="post">
 		{{ csrf_field() }}
 
@@ -67,18 +66,18 @@
           </div>
     	</div><br>
 
-        <input type="hidden" name="id" value="{{ $p->id }}">
+        <input type="hidden" name="id" value="{{ $permohonan->id }}">
 
 		<div class="form-group">
         <label for="title">Tanggal Pengajuan : </label>
-            <input type="hidden" name="tgl_pengajuan" value="{{ $p->tgl_pengajuan }}">
-            <span type="text" class="form-control" name="tgl_pengajuan" >{{ $p->tgl_pengajuan }}</span> 
+            <input type="hidden" name="tgl_pengajuan" value="{{ $permohonan->tgl_pengajuan }}">
+            <span type="text" class="form-control" name="tgl_pengajuan" disabled>{{ $permohonan->tgl_pengajuan }} </span> 
     	</div>
 
     	<div class="form-group">
          <label for="title">Tanggal Diterima TSI :</label>
-            <input type="hidden" name="tgl_diterima_tsi" value="{{ $p->tgl_diterima_tsi }}">
-            <span type="text" class="form-control" name="tgl_diterima_tsi">{{ $p->tgl_diterima_tsi }}</span>
+            <input type="hidden" name="tgl_diterima_tsi" value="{{ $permohonan->tgl_diterima_tsi }}">
+            <span type="text" class="form-control" name="tgl_diterima_tsi" disabled>{{ $permohonan->tgl_diterima_tsi }}</span>
     	</div>
 
     	<div class="form-group label-floating">
@@ -88,11 +87,11 @@
               @foreach ($department as $z)
                 <option 
                 value="{{ $z->id }}"
-                @if ($z->id)
+                @if ($z->id==$permohonan->department)
                   selected
                 @endif
               >
-                {{ $p->get_department->name }}
+                {{ $z->name }}
               </option>
               @endforeach
             </select>
@@ -101,31 +100,30 @@
 		
     	<div class="form-group">
         <label for="title">Klasifikasi Perbaikan : </label> 
-            <input type="hidden" name="klasifikasi_perbaikan" value="{{ $p->klasifikasi_perbaikan }}">
-            <span type="text" class="form-control" name="klasifikasi_perbaikan">{{ $p->klasifikasi_perbaikan }}</span>
+            <input type="hidden" name="klasifikasi_perbaikan" value="{{ $permohonan->klasifikasi_perbaikan }}">
+            <span type="text" class="form-control" name="klasifikasi_perbaikan" disabled>{{ $permohonan->klasifikasi_perbaikan }}</span>
         </div>
 
 		<div class="form-group">
         <label for="title">Dokumen Pendukung : </label> 
-            <span type="text" class="form-control" name="dokumen_pendukung">{{ $p->dokumen_pendukung }}</span>
+            <span type="text" class="form-control" name="dokumen_pendukung" disabled>{{ $permohonan->dokumen_pendukung }}</span>
 
         </div>
 
 		<div class="form-group">
          <label for="title">Uraian : </label>
-            <input type="hidden" name="uraian" value="{{ $p->uraian }}">
-            <span type="text" class="form-control" name="uraian" style="resize: vertical;">{{ $p->uraian }}</span>
+            <input type="hidden" name="uraian" value="{{ $permohonan->uraian }}">
+            <span type="text" class="form-control" name="uraian" style="resize: vertical;" disabled>{{ $permohonan->uraian }}</span>
     	</div><br>
 		<input class="btn btn-success" type="submit" value="Kirim Data">
-    <p></p>
-
+        <div>
+            
+        </div>
 		</fieldset>
 	</form>
     <a href="{{ URL('list') }}" class="btn btn-raised btn-danger pull-left">Kembali</a>
-    <div></div>
-    <button class="btn btn-info" href="#">Revisi</button>
+    {{-- <button class="btn btn-info" href="#">Revisi</button> --}}
 
-	 @endforeach
 	</div>
 </div>
 <script>

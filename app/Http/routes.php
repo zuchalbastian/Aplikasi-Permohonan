@@ -30,8 +30,13 @@ Route::post('/list/store','TindakLanjutController@store');
 Route::get('/staff','StaffController@index');
 Route::get('/staff/create/{id}','StaffController@create');
 Route::post('/staff/store','StaffController@store');
-
+Route::get('/staff/send/{id}','StaffController@send');
 Route::get('/staff/index2','StaffController@index2');
+
+Route::get('/spv','SuperAdminController@index');
+Route::get('/spv/send/{id}','SuperAdminController@send');
+
+Route::get('/manager','SuperAdminController@index2');
 
 // Authentication routes...
 Route::get('auth/login', 'LoginController@login');

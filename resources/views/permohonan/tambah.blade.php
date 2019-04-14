@@ -24,17 +24,20 @@
 				{{ csrf_field() }}
 
 				<!-- <legend></legend> -->
-		        <fieldset>	
+		        <fieldset>
+							
+								<input type="hidden" name="id" value="{{ Auth::user()->id }}">
 
-		            <div class="form-group label-floating">
+						    <div class="form-group label-floating">
 		            	<span class="control-label" for="focusedInput2">Tanggal Pengajuan</span>
 		            	<input class="form-control" id="date" name="tgl_pengajuan" required="required">
 		            	<p class="help-block"></p>
 		            </div>
 
 		            <div class="form-group label-floating">
-		            	<span class="control-label" for="focusedInput2">Tanggal Diterima TSI</span>
-		            	<input class="form-control" type="date" name="tgl_diterima_tsi" required="required" value="{{ date('Y-m-d') }}">
+									<span class="control-label" for="focusedInput2">Tanggal Diterima TSI</span>
+									<input class="form-control" type="hidden" name="tgl_diterima_tsi" required="required" value="{{ date('Y-m-d') }}">
+		            	<input class="form-control" type="date" name="tgl_cc" required="required" value="{{ date('Y-m-d') }}" disabled>
 		            	<p class="help-block"></p>
 		            </div>	
 

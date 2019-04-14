@@ -17,10 +17,11 @@ class CreateTindaklanjutTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->date('tgl_pengajuan');
             $table->date('tgl_diterima_tsi');
-            $table->text('bagian');
+            $table->integer('bagian');
             $table->text('klasifikasi_perbaikan');
             $table->text('dokumen_pendukung');
             $table->text('uraian');
+            $table->string('status')->default('baru');
         });
     }
 

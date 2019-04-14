@@ -42,7 +42,6 @@
 
    
  	
-	@foreach($tindaklanjut as $p)
 	 <form action="/staff/store" enctype='multipart/form-data' method="post">
 		{{ csrf_field() }}
 
@@ -68,7 +67,19 @@
            </div>
        </div><br>
  
-         <input type="hidden" name="id" value="{{ $p->id }}">
+         <input type="hidden" name="id" value="{{ $tindaklanjut->id }}">
+
+         <div class="form-group label-floating">
+            <label for="title">Tanggal Pengajuan : </label>
+                <input type="hidden" name="tgl_pengajuan" value="{{ $tindaklanjut->tgl_pengajuan }}">
+                <span type="text" class="form-control" name="tgl_pengajuan" disabled>{{ $tindaklanjut->tgl_pengajuan }} </span> 
+          </div>
+    
+          <div class="form-group label-floating">
+             <label for="title">Tanggal Diterima TSI :</label>
+                <input type="hidden" name="tgl_diterima_tsi" value="{{ $tindaklanjut->tgl_diterima_tsi }}">
+                <span type="text" class="form-control" name="tgl_diterima_tsi" disabled>{{ $tindaklanjut->tgl_diterima_tsi }}</span>
+          </div>
 
          <div class="form-group label-floating">
           <span class="control-label" for="focusedInput2">Bagian</span>
@@ -77,11 +88,11 @@
             @foreach ($department as $z)
               <option 
               value="{{ $z->id }}"
-              @if ($z->id)
+              @if ($z->id==$tindaklanjut->department)
                 selected
               @endif
             >
-              {{ $p->get_department->name }}
+              {{ $z->name }}
             </option>
             @endforeach
           </select>
@@ -91,16 +102,16 @@
     	<div class="form-group">
         <label for="title">Klasifikasi Perbaikan</label> 
             <div class="input-field col s12">
-                 <input type=radio name="klasifikasi_perbaikan" value="modifikasi_fitur" {{ $p->klasifikasi_perbaikan == 'modifikasi_fitur' ? 'checked' : ''}}>Modifikasi Fitur</option><br>
-                 <input type=radio name="klasifikasi_perbaikan" value="penambahan_fitur" {{ $p->klasifikasi_perbaikan == 'penambahan_fitur' ? 'checked' : ''}}>Penambahan Fitur</option><br>
-                 <input type=radio name="klasifikasi_perbaikan" value="lain_lain" {{ $p->klasifikasi_perbaikan == 'lain_lain' ? 'checked' : ''}}>Lain - Lain</option><br>
+                 <input type=radio name="klasifikasi_perbaikan" value="modifikasi_fitur" {{ $tindaklanjut->klasifikasi_perbaikan == 'modifikasi_fitur' ? 'checked' : ''}}>Modifikasi Fitur</option><br>
+                 <input type=radio name="klasifikasi_perbaikan" value="penambahan_fitur" {{ $tindaklanjut->klasifikasi_perbaikan == 'penambahan_fitur' ? 'checked' : ''}}>Penambahan Fitur</option><br>
+                 <input type=radio name="klasifikasi_perbaikan" value="lain_lain" {{ $tindaklanjut->klasifikasi_perbaikan == 'lain_lain' ? 'checked' : ''}}>Lain - Lain</option><br>
             </div>
       </div>
 
       <div class="form-group">
         <label for="title">Uraian</label>
         <div class="input-field col s12">
-          <textarea type="text" class="form-control" name="uraian" rows="3">{{ $p->uraian }}</textarea>
+          <textarea type="text" class="form-control" name="uraian" rows="3">{{ $tindaklanjut->uraian }}</textarea>
         </div>
     </div>
 
@@ -109,7 +120,8 @@
     <div class="form-group">
       <label for="title">Tanggal Selesai Analisa</label>
       <div class="input-field col s13">
-        <input type="date" class="form-control validate" name="tgl_analisa" value="{{ $p->tgl_analisa }}">
+        <input class="form-control" type="date" name="tgl_analisa" required="required">
+        <p class="help-block"></p>
       </div>
     </div>
 
@@ -141,7 +153,7 @@
 		
 		</fieldset>
 	</form>
-	 @endforeach
+
 	</div>
 </div>
 <script>

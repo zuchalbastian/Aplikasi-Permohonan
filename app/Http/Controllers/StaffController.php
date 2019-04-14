@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 Use App\TindakLanjut;
 Use App\FinishJob;
+Use App\AnalysisReport;
 Use App\User;
 use Auth;
 
@@ -45,7 +46,11 @@ class StaffController extends Controller
     public function create($id)
     {
         // mengambil data permohonan berdasarkan id yang dipilih
-        $daftar = TindakLanjut::with('get_department')->where('id',$id)->get();
+        $daftar = DB::table('tindaklanjut')
+                  ->select('tindaklanjut.*', 'departments.id as department', 'departments.name')
+                  ->leftJoin('departments', 'tindaklanjut.bagian', '=', 'departments.id')
+                  ->where('tindaklanjut.id', $id)
+                  ->first();
 
         $staffs = User::where('role_id', 3)->get();
 
@@ -65,6 +70,8 @@ class StaffController extends Controller
     {
         $tambah = new FinishJob();
         $tambah->user_id = $request['id_staff'];
+        $tambah->tgl_pengajuan = $request['tgl_pengajuan'];
+        $tambah->tgl_diterima_tsi = $request['tgl_diterima_tsi'];
         $tambah->bagian = $request['bagian'];
         $tambah->klasifikasi_perbaikan = $request['klasifikasi_perbaikan'];
         $tambah->uraian = $request['uraian'];
@@ -76,6 +83,26 @@ class StaffController extends Controller
          $tambah->save();
 
         // alihkan halaman ke halaman permohonan
+        return redirect()->to('/staff/index2');
+    }
+
+    public function send($id)
+    {
+        $finishjob = FinishJob::find($id);
+        $analysis = new AnalysisReport;
+        $analysis->user_id = $finishjob->user_id;
+        $analysis->tgl_pengajuan = $finishjob->tgl_pengajuan;
+        $analysis->tgl_diterima_tsi = $finishjob->tgl_diterima_tsi;
+        $analysis->bagian = $finishjob->bagian;
+        $analysis->klasifikasi_perbaikan = $finishjob->klasifikasi_perbaikan;
+        $analysis->uraian = $finishjob->uraian;
+
+        $analysis->tgl_analisa = $finishjob->tgl_analisa;
+        $analysis->hasil_analisa = $finishjob->hasil_analisa;
+        $analysis->tgl_selesai = $finishjob->tgl_selesai;
+
+        $analysis->save();
+        // $finishjob->delete();
         return redirect()->to('/staff/index2');
     }
 

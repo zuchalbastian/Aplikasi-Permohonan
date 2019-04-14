@@ -41,8 +41,8 @@
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
-    <!-- <link href="/{{ URL::asset('css/default.css') }}" rel="stylesheet"> -->
-    <!-- <link href="/{{ URL::asset('css/default.date.css') }}" rel="stylesheet"> -->
+    {{-- <!-- <link href="/{{ URL::asset('css/default.css') }}" rel="stylesheet"> --> --}}
+    {{-- <!-- <link href="/{{ URL::asset('css/default.date.css') }}" rel="stylesheet"> --> --}}
 
     <!-- Custom styles for this template -->
     <!-- <link href="starter-template.css" rel="stylesheet"> -->
@@ -76,12 +76,16 @@
                     <li><a href="/permohonan">Home</a></li>
                     @if(Auth::user()->role_id==2)
                     <li><a href="/permohonan">Permohonan</a></li>
-                    <li><a href="#">Laporan Hasil Permohonan</a></li>
+                    <li><a href="#">Hasil Permohonan</a></li>
                     @elseif(Auth::user()->role_id==1)
                     <li><a href="/list">Permohonan Masuk</a></li>
                     @elseif(Auth::user()->role_id==3)
                     <li><a href="/staff">Daftar Pekerjaan Baru</a></li>
                     <li><a href="/staff/index2">Daftar Pekerjaan Terselesaikan</a></li>
+                    @elseif(Auth::user()->role_id==4)
+                    <li><a href="/spv">Laporan Analisis Pekerjaan</a></li>
+                    @elseif(Auth::user()->role_id==5)
+                    <li><a href="/manager">Laporan Hasil Pekerjaan</a></li>
                     @endif
                     <li><a href="/auth/logout">Log Out</a></li>
                 </ul>
@@ -99,13 +103,13 @@
 					 <li><a href="#">Tutorial JQuery dasar</a></li>				 
 				</ul> -->
 			</div>
-<!--         @if (session('message'))
+{{-- <!--         @if (session('message'))
             <div class="alert alert-{{ session('type') }}">
                 {{ session('message') }}
             </div>
-        @endif -->
+        @endif --> --}}
         <div class="col-md-9 content">
-        	 <!-- @yield('header') -->
+        	 {{-- <!-- @yield('header') --> --}}
         	@yield('content')
         </div>
 
@@ -158,10 +162,10 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <!-- <script src="/{{ URL::asset('js/jquery.1.7.0.js') }}"></script> -->
+    {{-- <!-- <script src="/{{ URL::asset('js/jquery.1.7.0.js') }}"></script> -->
     <!-- <script src="/{{ URL::asset('js/legacy.js') }}"></script> -->
     <!-- <script src="/{{ URL::asset('js/picker.date.js') }}"></script> -->
-    <!-- <script src="/{{ URL::asset('js/picker.js') }}"></script> -->
+    <!-- <script src="/{{ URL::asset('js/picker.js') }}"></script> --> --}}
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->

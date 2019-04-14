@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePermohonanTable extends Migration
+class CreateAnalysisreportTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,17 +12,19 @@ class CreatePermohonanTable extends Migration
      */
     public function up()
     {
-        Schema::create('permohonan', function (Blueprint $table) {
+        Schema::create('analysisreport', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->date('tgl_pengajuan');
             $table->date('tgl_diterima_tsi');
             $table->integer('bagian');
             $table->text('klasifikasi_perbaikan');
-            $table->text('dokumen_pendukung');
             $table->text('uraian');
+            $table->date('tgl_analisa');
+            $table->text('hasil_analisa');
+            $table->date('tgl_selesai');
             $table->string('status')->default('baru');
-            $table->timestamps();
+
         });
     }
 
@@ -33,6 +35,6 @@ class CreatePermohonanTable extends Migration
      */
     public function down()
     {
-        Schema::drop('permohonan');
+        Schema::drop('analysisreport');
     }
 }

@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FinishJob extends Model
+class AnalysisReport extends Model
 {
-    protected $table = 'finishjob';
+    protected $table = 'analysisreport';
 	protected $primaryKey = 'id';
 	protected $fillable = ['nip_staff', 'name_staff', 'bagian', 'klasifikasi_perbaikan', 'uraian', 'tgl_analisa', 'hasil_analisa', 'tgl_selesai', 'status' ];
 	public $timestamps = false;

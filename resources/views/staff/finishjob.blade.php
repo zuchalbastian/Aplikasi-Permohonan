@@ -14,6 +14,8 @@
 
 	<table border="1"  class="table table-bordered table-hover ">
 		<tr>
+			<th>Tanggal Pengajuan</th>
+			<th>Tanggal Diterima TSI</th>
 			<th>Bagian</th>
 			<th>Klasifikasi Perbaikan</th>
 			<th>Uraian</th>
@@ -24,6 +26,8 @@
 		</tr>
 		@foreach($finishjob as $p)
 		<tr>
+			<td>{{ $p->tgl_pengajuan }}</td>
+			<td>{{ $p->tgl_diterima_tsi }}</td>
 			<td>{{ $p->get_department->name }}</td>
 			<td>{{ $p->klasifikasi_perbaikan }}</td>
 			<td>{{ $p->uraian }}</td>
@@ -31,7 +35,7 @@
 			<td>{{ $p->hasil_analisa }}</td>
 			<td>{{ $p->tgl_selesai }}</td>
 			<td>
-				<a href="#" class="btn btn-sm btn-raised btn-info">Send</a>
+				<a href="/staff/send/{{ $p->id }}" class="btn btn-sm btn-raised btn-info">Send</a>
 				<br><br>
 			</td>
 		</tr>

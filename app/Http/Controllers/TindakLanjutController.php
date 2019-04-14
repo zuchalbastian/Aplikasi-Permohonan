@@ -37,7 +37,11 @@ class TindakLanjutController extends Controller
     public function create($id)
     {
         // mengambil data permohonan berdasarkan id yang dipilih
-        $daftar = Permohonan::with('get_department')->where('id',$id)->get();
+        $daftar = DB::table('permohonan')
+                  ->select('permohonan.*', 'departments.id as department', 'departments.name')
+                  ->leftJoin('departments', 'permohonan.bagian', '=', 'departments.id')
+                  ->where('permohonan.id', $id)
+                  ->first();
         
         $staffs = User::where('role_id', 3)->get();
 

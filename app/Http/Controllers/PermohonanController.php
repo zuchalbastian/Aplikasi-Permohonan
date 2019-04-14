@@ -10,6 +10,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 Use App\Permohonan; 
 Use App\Department; 
+use Carbon\Carbon;
+Use App\User;
 use File;
 
 class PermohonanController extends Controller
@@ -22,7 +24,8 @@ class PermohonanController extends Controller
     public function index()
     {
         // mengambil data dari table permohonan
-        $permohonan = Permohonan::with('get_department')->get();
+        $permohonan = Permohonan::with('get_department')->where('user_id', Auth::user()->id)->get();
+
        
         // mengirim data permohonan ke view permohonan
         if(Auth::user()->role_id==2){
@@ -31,6 +34,10 @@ class PermohonanController extends Controller
             return redirect('/list');
         }elseif(Auth::user()->role_id==3){
             return redirect('/staff');
+        }elseif(Auth::user()->role_id==4){
+            return redirect('/spv');
+        }elseif(Auth::user()->role_id==5){
+            return redirect('/manager');
         }
     }
 
@@ -56,6 +63,7 @@ class PermohonanController extends Controller
     public function store(Request $request)
     {
         $tambah = new Permohonan();
+        $tambah->user_id = $request['id'];
         $tambah->tgl_pengajuan = $request['tgl_pengajuan'];
         $tambah->tgl_diterima_tsi = $request['tgl_diterima_tsi'];
         $tambah->bagian = $request['bagian'];
@@ -69,6 +77,9 @@ class PermohonanController extends Controller
         $tambah->dokumen_pendukung = $fileName;
 
         $tambah->uraian = $request['uraian'];
+
+        $tambah->created_at = Carbon::now()->format('Y-m-d H:i:s');
+        $tambah->updated_at = Carbon::now()->format('Y-m-d H:i:s');
 
          $tambah->save();
 

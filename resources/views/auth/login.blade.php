@@ -33,30 +33,30 @@
                               <input placeholder="Masukkan Password" class='col-sm-4' type='password' name='password' id='password' />
                            <!-- </div> -->
                           </div>
-                          <!-- <div class="col-sm-offset-2 col-sm-10"> -->
-                          <!-- <label style='float: center;'>
-                              <a class='pink-text' href='#!'><b>Forgot Password?</b></a>
-                          </label>
-                         --><!-- </div> -->
-                      </div>
-                     <!--  <div class="row">
-                        <div class="input-field col s12">
-                           <div class="captcha">
-                             <span>{!! captcha_img() !!}</span>
-                               <button type="button" class="btn btn-success">
-                                   <i class="fa fa-refresh" id="refresh"></i>
-                               </button>
-                            </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="input-field col s12">
-                            <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
-                        </div>
-                      </div> -->
+
+                          <div class="form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
+                              <font  face="Century Gothic" size="3" color="black" class="col-sm-5 control-label" for='password'>Captcha</font>
+                              
+                              {{-- <label for="password" class="col-md-4 control-label">Captcha</label> --}}
+                              <div class="col-sm-4">
+                                  <div class="captcha">
+                                  <span>{!! captcha_img('flat') !!}</span>
+                                  {{-- <button type="button" class="btn btn-success btn-refresh"><i class="fa fa-refresh"></i></button> --}}
+                                  </div><br>
+                                  <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+        
+        
+                                  @if ($errors->has('captcha'))
+                                      <span class="help-block">
+                                          <strong>{{ $errors->first('captcha') }}</strong>
+                                      </span>
+                                  @endif
+                              </div>
+                          </div>
+
                       <div class='box-footer bg-gray'>
 
-                          <a class="btn btn-flat btn-primary" href="/auth/register">Create account</a>
+                          {{-- <a class="btn btn-flat btn-primary" href="/auth/register">Create account</a> --}}
                           <button type='submit' name='btn_login' class='btn btn-flat btn-success  pull right '>Login</button>
                       </div>
                 </form>
@@ -79,13 +79,18 @@
 
 @stop
 <script type="text/javascript">
-$('#refresh').click(function(){
+
+
+$(".btn-refresh").click(function(){
   $.ajax({
      type:'GET',
-     url:'refreshcaptcha',
+     url:'/refresh_captcha',
      success:function(data){
         $(".captcha span").html(data.captcha);
      }
   });
 });
+
+
 </script>
+

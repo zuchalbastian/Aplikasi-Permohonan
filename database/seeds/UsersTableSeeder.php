@@ -23,6 +23,16 @@ class UsersTableSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'name' => 'user2',
+            'role_id' => 2,
+            'nip' => 1461600208,
+            'email' => 'user678@gmail.com',
+            'password' => bcrypt('user6789'),
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('users')->insert([
             'name' => 'admin',
             'role_id' => 1,
              'nip' => 1461600243,
@@ -48,6 +58,26 @@ class UsersTableSeeder extends Seeder
              'nip' => 1461600222,
             'email' => 'staff567@gmail.com',
             'password' => bcrypt('staff2357'),
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'spv',
+            'role_id' => 4,
+             'nip' => 1461600333,
+            'email' => 'spv333@gmail.com',
+            'password' => bcrypt('spv3456'),
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+ 
+        DB::table('users')->insert([
+            'name' => 'manager',
+            'role_id' => 5,
+             'nip' => 1461600345,
+            'email' => 'manager456@gmail.com',
+            'password' => bcrypt('manager78'),
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);

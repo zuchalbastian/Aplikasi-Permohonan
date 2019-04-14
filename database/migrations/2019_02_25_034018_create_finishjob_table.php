@@ -15,12 +15,16 @@ class CreateFinishjobTable extends Migration
         Schema::create('finishjob', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->text('bagian');
+            $table->date('tgl_pengajuan');
+            $table->date('tgl_diterima_tsi');
+            $table->integer('bagian');
             $table->text('klasifikasi_perbaikan');
             $table->text('uraian');
             $table->date('tgl_analisa');
             $table->text('hasil_analisa');
             $table->date('tgl_selesai');
+            $table->string('status')->default('baru');
+
         });
     }
 

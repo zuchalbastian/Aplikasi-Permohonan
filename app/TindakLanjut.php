@@ -8,7 +8,7 @@ class TindakLanjut extends Model
 {
     protected $table = 'tindaklanjut';
 	protected $primaryKey = 'id';
-	protected $fillable = ['nip_staff', 'name_staff', 'tgl_pengajuan', 'tgl_diterima_tsi', 'bagian', 'klasifikasi_perbaikan', 'dokumen_pendukung', 'uraian'];
+	protected $fillable = ['nip_staff', 'name_staff', 'tgl_pengajuan', 'tgl_diterima_tsi', 'bagian', 'klasifikasi_perbaikan', 'dokumen_pendukung', 'uraian', 'status'];
 	public $timestamps = false;
 
 	public function get_department(){
