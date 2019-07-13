@@ -22,7 +22,17 @@ class CreatePermohonanTable extends Migration
             $table->text('dokumen_pendukung');
             $table->text('uraian');
             $table->string('status')->default('baru');
+            
+            $table->integer('staff_id')->nullable();
+            $table->date('tgl_analisa')->nullable();
+            $table->text('hasil_analisa')->nullable();
+            $table->date('tgl_selesai')->nullable();
+            $table->text('uraian_hasil_analisa')->nullable();
+            $table->text('alasan')->nullable();
+            $table->string('flag')->nullable();
+
             $table->timestamps();
+            
         });
     }
 

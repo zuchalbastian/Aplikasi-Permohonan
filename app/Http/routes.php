@@ -22,6 +22,7 @@ Route::get('/permohonan/edit/{id}','PermohonanController@edit');
 Route::post('/permohonan/update','PermohonanController@update');
 Route::get('/permohonan/destroy/{id}','PermohonanController@destroy');
 Route::get('/permohonan/getDownload','PermohonanController@getDownload');
+Route::get('/permohonan/result','PermohonanController@index2');
 
 Route::get('/list','TindakLanjutController@index');
 Route::get('/list/create/{id}','TindakLanjutController@create');
@@ -32,11 +33,16 @@ Route::get('/staff/create/{id}','StaffController@create');
 Route::post('/staff/store','StaffController@store');
 Route::get('/staff/send/{id}','StaffController@send');
 Route::get('/staff/index2','StaffController@index2');
+Route::get('/staff/revisi','StaffController@revisi');
+Route::post('/staff/sendrevisi','StaffController@sendrevisi');
+
 
 Route::get('/spv','SuperAdminController@index');
 Route::get('/spv/send/{id}','SuperAdminController@send');
+Route::post('/spv/store','SuperAdminController@store');
 
 Route::get('/manager','SuperAdminController@index2');
+Route::get('/manager/sendmanager/{id}','SuperAdminController@sendmanager');
 
 // Authentication routes...
 Route::get('auth/login', 'LoginController@login');

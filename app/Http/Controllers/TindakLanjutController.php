@@ -22,7 +22,10 @@ class TindakLanjutController extends Controller
     public function index()
     {
         // mengambil data dari table permohonan
-        $daftar = Permohonan::with('get_department')->get();
+        $daftar = Permohonan::with('get_department')
+                // ->where('flag', 'admin')
+                ->orderBy('id', 'desc')
+                ->paginate(5);
  
         // mengirim data permohonan ke view permohonan
         return view('tindaklanjut/daftar',['permohonan' => $daftar]);
@@ -60,28 +63,30 @@ class TindakLanjutController extends Controller
      */
     public function store(Request $request)
     {
-        $tambah = new TindakLanjut();
-        $tambah->user_id = $request['id_staff'];
-        $tambah->tgl_pengajuan = $request['tgl_pengajuan'];
-        $tambah->tgl_diterima_tsi = $request['tgl_diterima_tsi'];
-        $tambah->bagian = $request['bagian'];
-        $tambah->klasifikasi_perbaikan = $request['klasifikasi_perbaikan'];
+        $tambah = Permohonan::find($request->id);
+        $tambah->staff_id = $request['id_staff'];
+        // $tambah->tgl_pengajuan = $request['tgl_pengajuan'];
+        // $tambah->tgl_diterima_tsi = $request['tgl_diterima_tsi'];
+        // $tambah->bagian = $request['bagian'];
+        // $tambah->klasifikasi_perbaikan = $request['klasifikasi_perbaikan'];
 
         // Disini proses mendapatkan judul dan memindahkan letak gambar ke folder image
-        if (isset($request['dokumen_pendukung'])) {
-            $file       = $request->file('dokumen_pendukung');
-            $fileName   = $file->getClientOriginalName();
-            $request->file('dokumen_pendukung')->move("image/", $fileName);
+        // if (isset($request['dokumen_pendukung'])) {
+        //     $file       = $request->file('dokumen_pendukung');
+        //     $fileName   = $file->getClientOriginalName();
+        //     $request->file('dokumen_pendukung')->move("image/", $fileName);
     
-            $tambah->dokumen_pendukung = $fileName;
-        } else {
+        //     $tambah->dokumen_pendukung = $fileName;
+        // } else {
                         
-            $data = DB::table('permohonan')->where('id',$request['id'])->first()->dokumen_pendukung;
-            $tambah->dokumen_pendukung = $data;
+        //     $data = DB::table('permohonan')->where('id',$request['id'])->first()->dokumen_pendukung;
+        //     $tambah->dokumen_pendukung = $data;
             
-        }
+        // }
 
-        $tambah->uraian = $request['uraian'];
+        // $tambah->uraian = $request['uraian'];
+        $tambah->status = 'proses staff';
+        $tambah->flag = 'admin';
 
          $tambah->save();
 

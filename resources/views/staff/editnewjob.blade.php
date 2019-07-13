@@ -48,47 +48,30 @@
 		<legend></legend>
 		<fieldset>
 
-      <div class="form-group">
-        <label for="title">NIP Staff</label>
-         <div class="input-field col s12">
-             <input id="id_staff" type="hidden" class="form-control" name="id_staff">
-             <input id="nip_staff" type="text" class="form-control" name="nip_staff" disabled>
-           </div>
-       </div>
+       <input type="hidden" name="id_staff" value="{{ Auth::user()->id }}">
  
-       <div class="form-group">
-        <label for="title">Nama Staff</label>
-         <div class="input-field col s12">
-                 <select id="name_staff" name="name_staff" class="form-control" onchange="change();">
-                     @foreach ($staffs as $index => $staff)
-                         <option value="{{ $index }}">{{ $staff->name }}</option>
-                     @endforeach
-                 </select>
-           </div>
-       </div><br>
- 
-         <input type="hidden" name="id" value="{{ $tindaklanjut->id }}">
+         <input type="hidden" name="id" value="{{ $permohonan->id }}">
 
          <div class="form-group label-floating">
             <label for="title">Tanggal Pengajuan : </label>
-                <input type="hidden" name="tgl_pengajuan" value="{{ $tindaklanjut->tgl_pengajuan }}">
-                <span type="text" class="form-control" name="tgl_pengajuan" disabled>{{ $tindaklanjut->tgl_pengajuan }} </span> 
+                <input type="hidden" name="tgl_pengajuan" value="{{ $permohonan->tgl_pengajuan }}">
+                <span type="text" class="form-control" name="tgl_pengajuan" disabled>{{ $permohonan->tgl_pengajuan }} </span> 
           </div>
     
           <div class="form-group label-floating">
              <label for="title">Tanggal Diterima TSI :</label>
-                <input type="hidden" name="tgl_diterima_tsi" value="{{ $tindaklanjut->tgl_diterima_tsi }}">
-                <span type="text" class="form-control" name="tgl_diterima_tsi" disabled>{{ $tindaklanjut->tgl_diterima_tsi }}</span>
+                <input type="hidden" name="tgl_diterima_tsi" value="{{ $permohonan->tgl_diterima_tsi }}">
+                <span type="text" class="form-control" name="tgl_diterima_tsi" disabled>{{ $permohonan->tgl_diterima_tsi }}</span>
           </div>
 
          <div class="form-group label-floating">
           <span class="control-label" for="focusedInput2">Bagian</span>
-          <select name="bagian" class="form-control">
+          <select name="bagian" class="form-control" disabled>
             
             @foreach ($department as $z)
               <option 
               value="{{ $z->id }}"
-              @if ($z->id==$tindaklanjut->department)
+              @if ($z->id==$permohonan->department)
                 selected
               @endif
             >
@@ -99,30 +82,39 @@
            <p class="help-block"></p>
          </div>	
 		
-    	<div class="form-group">
-        <label for="title">Klasifikasi Perbaikan</label> 
-            <div class="input-field col s12">
-                 <input type=radio name="klasifikasi_perbaikan" value="modifikasi_fitur" {{ $tindaklanjut->klasifikasi_perbaikan == 'modifikasi_fitur' ? 'checked' : ''}}>Modifikasi Fitur</option><br>
-                 <input type=radio name="klasifikasi_perbaikan" value="penambahan_fitur" {{ $tindaklanjut->klasifikasi_perbaikan == 'penambahan_fitur' ? 'checked' : ''}}>Penambahan Fitur</option><br>
-                 <input type=radio name="klasifikasi_perbaikan" value="lain_lain" {{ $tindaklanjut->klasifikasi_perbaikan == 'lain_lain' ? 'checked' : ''}}>Lain - Lain</option><br>
+         <div class="form-group">
+          <label for="title">Klasifikasi Perbaikan : </label> 
+              <input type="hidden" name="klasifikasi_perbaikan" value="{{ $permohonan->klasifikasi_perbaikan }}">
+              <span type="text" class="form-control" name="klasifikasi_perbaikan" disabled>{{ $permohonan->klasifikasi_perbaikan }}</span>
+          </div>
+
+          <div class="form-group">
+            <label for="title">Dokumen Pendukung : </label> 
+                <span type="text" class="form-control" name="dokumen_pendukung" disabled>{{ $permohonan->dokumen_pendukung }}</span>
+    
             </div>
-      </div>
 
       <div class="form-group">
         <label for="title">Uraian</label>
         <div class="input-field col s12">
-          <textarea type="text" class="form-control" name="uraian" rows="3">{{ $tindaklanjut->uraian }}</textarea>
+          <textarea type="text" class="form-control" name="uraian" rows="3" disabled>{{ $permohonan->uraian }}</textarea>
         </div>
     </div>
 
     <hr />
 
-    <div class="form-group">
+    {{-- <div class="form-group">
       <label for="title">Tanggal Selesai Analisa</label>
       <div class="input-field col s13">
-        <input class="form-control" type="date" name="tgl_analisa" required="required">
+        <input class="form-control" id="date" name="tgl_analisa" required="required">
         <p class="help-block"></p>
       </div>
+    </div> --}}
+
+    <div class="form-group label-floating">
+      <span class="control-label" for="focusedInput2">Tanggal Selesai Analisa</span>
+      <input class="form-control" id="date" name="tgl_analisa" required="required">
+      <p class="help-block"></p>
     </div>
 
     <div class="form-group">
@@ -145,9 +137,16 @@
      
     <div class="form-group label-floating">
       <label class="control-label" for="focusedInput2">Tanggal Penyelesaian</label>
-      <input class="form-control validate" type="date" name="tgl_selesai" required="required" value="{{ date('Y-m-d') }}">
+      <input class="form-control validate" type="hidden" name="tgl_selesai" required="required" value="{{ date('Y-m-d') }}">
+      <input class="form-control validate" type="date" name="tgl_dd" required="required" value="{{ date('Y-m-d') }}" disabled>
       <p class="help-block"></p>
     </div>	
+
+    <div class="form-group label-floating">
+      <span class="control-label" for="focusedInput2">Uraian Hasil Analisa</span>
+      <textarea class="form-control" name="uraian_hasil_analisa" required="required"></textarea> 
+      <span class="help-block"></span>
+  </div><br>
 
 		<input type="submit" value="Simpan Data">
 		
@@ -156,13 +155,5 @@
 
 	</div>
 </div>
-<script>
-  var staffs = {!! $staffs !!};
-  change();
-  function change() {
-      var value = document.getElementById('name_staff').value;
-      document.getElementById('id_staff').value = staffs[value].id;
-      document.getElementById('nip_staff').value = staffs[value].nip;
-  }
-</script>
+
 @endsection

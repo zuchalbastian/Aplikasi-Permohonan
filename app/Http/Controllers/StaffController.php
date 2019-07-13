@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+Use App\Permohonan;
 Use App\TindakLanjut;
 Use App\FinishJob;
 Use App\AnalysisReport;
@@ -22,19 +23,39 @@ class StaffController extends Controller
     public function index()
     {
         // mengambil data dari table permohonan
-        $daftar2 = TindakLanjut::with('get_department')->where('user_id', Auth::user()->id)->get();
- 
+        $daftar2 = Permohonan::with('get_department')
+                 ->where('staff_id', Auth::user()->id)
+                 ->orderBy('id', 'desc')
+                 ->paginate(5);
+        
         // mengirim data permohonan ke view permohonan
-        return view('staff/newjob',['tindaklanjut' => $daftar2]);
+        return view('staff/newjob',['permohonan' => $daftar2]);
     }
 
         public function index2()
     {
         // mengambil data dari table permohonan
-        $daftar3 = FinishJob::with('get_department')->where('user_id', Auth::user()->id)->get();
+        $daftar3 = Permohonan::with('get_department')
+                   ->where('flag', 'staff')
+                   ->where('staff_id', Auth::user()->id)
+                   ->orderBy('id', 'desc')
+                   ->paginate(5);
  
         // mengirim data permohonan ke view permohonan
-        return view('staff/finishjob',['finishjob' => $daftar3]);
+        return view('staff/finishjob',['permohonan' => $daftar3]);
+    }
+
+    public function revisi()
+    {
+        // mengambil data dari table permohonan
+        $daftar3 = Permohonan::with('get_department')
+                   ->where('flag', 'revisi')
+                   ->where('staff_id', Auth::user()->id)
+                   ->orderBy('id', 'desc')
+                   ->paginate(5);
+ 
+        // mengirim data permohonan ke view permohonan
+        return view('staff/revisi',['permohonan' => $daftar3]);
     }
 
 
@@ -46,10 +67,10 @@ class StaffController extends Controller
     public function create($id)
     {
         // mengambil data permohonan berdasarkan id yang dipilih
-        $daftar = DB::table('tindaklanjut')
-                  ->select('tindaklanjut.*', 'departments.id as department', 'departments.name')
-                  ->leftJoin('departments', 'tindaklanjut.bagian', '=', 'departments.id')
-                  ->where('tindaklanjut.id', $id)
+        $daftar = DB::table('permohonan')
+                  ->select('permohonan.*', 'departments.id as department', 'departments.name')
+                  ->leftJoin('departments', 'permohonan.bagian', '=', 'departments.id')
+                  ->where('permohonan.id', $id)
                   ->first();
 
         $staffs = User::where('role_id', 3)->get();
@@ -57,7 +78,7 @@ class StaffController extends Controller
         $departments = DB::table('departments')->get();
         
         // passing data permohonan yang didapat ke view edit.blade.php
-        return view('staff/editnewjob',['tindaklanjut' => $daftar,  'staffs' => $staffs, 'department' => $departments]);
+        return view('staff/editnewjob',['permohonan' => $daftar,  'staffs' => $staffs, 'department' => $departments]);
     }
 
     /**
@@ -68,17 +89,13 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        $tambah = new FinishJob();
-        $tambah->user_id = $request['id_staff'];
-        $tambah->tgl_pengajuan = $request['tgl_pengajuan'];
-        $tambah->tgl_diterima_tsi = $request['tgl_diterima_tsi'];
-        $tambah->bagian = $request['bagian'];
-        $tambah->klasifikasi_perbaikan = $request['klasifikasi_perbaikan'];
-        $tambah->uraian = $request['uraian'];
+        $tambah = Permohonan::find($request->id);
 
         $tambah->tgl_analisa = $request['tgl_analisa'];
         $tambah->hasil_analisa = $request['hasil_analisa'];
         $tambah->tgl_selesai = $request['tgl_selesai'];
+        $tambah->uraian_hasil_analisa = $request['uraian_hasil_analisa'];
+        $tambah->flag = 'staff';
 
          $tambah->save();
 
@@ -86,25 +103,33 @@ class StaffController extends Controller
         return redirect()->to('/staff/index2');
     }
 
-    public function send($id)
+    public function send(Request $request)
     {
-        $finishjob = FinishJob::find($id);
-        $analysis = new AnalysisReport;
-        $analysis->user_id = $finishjob->user_id;
-        $analysis->tgl_pengajuan = $finishjob->tgl_pengajuan;
-        $analysis->tgl_diterima_tsi = $finishjob->tgl_diterima_tsi;
-        $analysis->bagian = $finishjob->bagian;
-        $analysis->klasifikasi_perbaikan = $finishjob->klasifikasi_perbaikan;
-        $analysis->uraian = $finishjob->uraian;
+        $tambah = Permohonan::find($request->id);
+        $tambah->status = 'approve spv';
+        $tambah->flag = 'spv';
 
-        $analysis->tgl_analisa = $finishjob->tgl_analisa;
-        $analysis->hasil_analisa = $finishjob->hasil_analisa;
-        $analysis->tgl_selesai = $finishjob->tgl_selesai;
-
-        $analysis->save();
+        $tambah->save();
         // $finishjob->delete();
         return redirect()->to('/staff/index2');
     }
+
+    public function sendrevisi(Request $request)
+    {
+        $tambah = Permohonan::find($request->id);
+        $tambah->tgl_analisa = $request['tgl_analisa'];
+        $tambah->hasil_analisa = $request['hasil_analisa'];
+        $tambah->tgl_selesai = $request['tgl_selesai'];
+        $tambah->uraian_hasil_analisa = $request['uraian_hasil_analisa'];
+        $tambah->status = 'approve spv';
+        $tambah->flag = 'spv';
+
+        $tambah->save();
+        // $finishjob->delete();
+        return redirect()->to('/staff/revisi');
+    }
+
+
 
     /**
      * Display the specified resource.

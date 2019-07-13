@@ -12,6 +12,14 @@ class Permohonan extends Model
 	public $timestamps = false;
 
 	public function get_department(){
-    	return $this->belongsTo('App\\Department', 'bagian', 'id');
+    	return $this->belongsTo('App\Department', 'bagian', 'id');
+	}
+	
+	public function get_user(){
+    	return $this->belongsTo('App\User', 'user_id', 'id');
+	}
+	
+	public function get_staff(){
+    	return $this->belongsTo('App\User', 'staff_id', 'id');
     }
 }

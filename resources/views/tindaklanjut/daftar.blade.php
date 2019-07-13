@@ -11,7 +11,7 @@
 	    </center>
  	</div>
  	<div class="panel-body">
-
+	<div class="table-responsive">
 	<table border="1"  class="table table-bordered table-hover ">
 		<tr>
 			<th>Tanggal Pengajuan</th>
@@ -37,7 +37,8 @@
 		</tr>
 		@endforeach
 	</table>
- 
+	{!! $permohonan->render() !!} 
+	</div>
    </div>
 </div>
 @stop

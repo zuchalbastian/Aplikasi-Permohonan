@@ -24,11 +24,15 @@ class PermohonanController extends Controller
     public function index()
     {
         // mengambil data dari table permohonan
-        $permohonan = Permohonan::with('get_department')->where('user_id', Auth::user()->id)->get();
+        $permohonan = \App\Permohonan::with('get_department')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'desc')
+                    ->paginate(5);
 
        
         // mengirim data permohonan ke view permohonan
         if(Auth::user()->role_id==2){
+            // return $permohonan;
             return view('permohonan/index',['permohonan' => $permohonan]);
         }elseif(Auth::user()->role_id==1){
             return redirect('/list');
@@ -39,6 +43,18 @@ class PermohonanController extends Controller
         }elseif(Auth::user()->role_id==5){
             return redirect('/manager');
         }
+    }
+
+    public function index2()
+    {
+        $result = Permohonan::with('get_department')
+                ->where('flag','user')
+                ->where('user_id', Auth::user()->id)
+                ->orderBy('id', 'desc')
+                ->paginate(5);
+ 
+        // mengirim data permohonan ke view permohonan
+        return view('permohonan/requestresults',['permohonan' => $result]);
     }
 
     /**
@@ -80,6 +96,8 @@ class PermohonanController extends Controller
 
         $tambah->created_at = Carbon::now()->format('Y-m-d H:i:s');
         $tambah->updated_at = Carbon::now()->format('Y-m-d H:i:s');
+
+        $tambah->flag = 'admin';
 
          $tambah->save();
 

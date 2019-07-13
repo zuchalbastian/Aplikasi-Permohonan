@@ -82,7 +82,7 @@
 
     	<div class="form-group label-floating">
             <span class="control-label" for="focusedInput2">Bagian</span>
-            <select name="bagian" class="form-control">
+            <select name="bagian" class="form-control" disabled>
               
               @foreach ($department as $z)
                 <option 

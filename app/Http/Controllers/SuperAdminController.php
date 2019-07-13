@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+Use App\Permohonan;
 Use App\AnalysisReport;
 Use App\ReportJob;
 Use App\User;
@@ -20,38 +21,58 @@ class SuperAdminController extends Controller
      */
     public function index()
     {
-        $analysis = AnalysisReport::with('get_department')->get();
- 
+        $analysis = Permohonan::with('get_department')
+                  ->with('get_user')
+                  ->with('get_staff')
+                  ->where('flag','spv')
+                  ->orderBy('id', 'desc')
+                  ->paginate(5);
+
+        // $analysis = DB::table('permohonan')
+        //           ->select('permohonan.*', 'departments.id as department', 'departments.name')
+        //           ->leftJoin('departments', 'permohonan.bagian', '=', 'departments.id')
+        //           ->where('permohonan.id', $id)
+        //           ->select('permohonan.*', 'users.id as users', 'users.name', 'users.nip')
+        //           ->leftJoin('users', 'permohonan.user_id', '=', 'users.name')
+        //           ->leftJoin('users', 'permohonan.staff_id', '=', 'users.name')
+        //           ->where('permohonan.id', $id)
+        //           ->first();
+        // return $analysis;
         // mengirim data permohonan ke view permohonan
-        return view('spv/analysisreport',['analysisreport' => $analysis]);
+        return view('spv/analysisreport',['permohonan' => $analysis]);
     }
 
     public function index2()
     {
-        $report = ReportJob::with('get_department')->get();
+        $report = Permohonan::with('get_department')
+                ->where('flag','manager')
+                ->orderBy('id', 'desc')
+                ->paginate(5);
  
         // mengirim data permohonan ke view permohonan
-        return view('manager/reportjob',['reportjob' => $report]);
+        return view('manager/reportjob',['permohonan' => $report]);
     }
 
-    public function send($id)
+    public function send(Request $request)
     {
-        // $analysis = AnalysisReport::find($id);
-        // $report = new ReportJob;
-        // $report->user_id = $analysis->user_id;
-        // $report->tgl_pengajuan = $analysis->tgl_pengajuan;
-        // $report->tgl_diterima_tsi = $analysis->tgl_diterima_tsi;
-        // $report->bagian = $analysis->bagian;
-        // $report->klasifikasi_perbaikan = $analysis->klasifikasi_perbaikan;
-        // $report->uraian = $analysis->uraian;
+        $tambah = Permohonan::find($request->id);
+        $tambah->status = 'approve manager';
+        $tambah->flag = 'manager';
 
-        // $report->tgl_analisa = $analysis->tgl_analisa;
-        // $report->hasil_analisa = $analysis->hasil_analisa;
-        // $report->tgl_selesai = $analysis->tgl_selesai;
-
-        $report->save();
+        $tambah->save();
         // $finishjob->delete();
         return redirect()->to('/spv');
+    }
+
+    public function sendmanager(Request $request)
+    {
+        $tambah = Permohonan::find($request->id);
+        $tambah->status = 'data sudah di user';
+        $tambah->flag = 'user';
+
+        $tambah->save();
+        // $finishjob->delete();
+        return redirect()->to('/manager');
     }
 
     /**
@@ -72,7 +93,15 @@ class SuperAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tambah = Permohonan::find($request->id);
+        $tambah->alasan = $request['alasan'];
+
+        $tambah->status = 'proses direvisi';
+        $tambah->flag = 'revisi';
+
+         $tambah->save();
+
+         return redirect()->to('/spv');
     }
 
     /**
