@@ -75,7 +75,7 @@
 
     	<div class="form-group label-floating">
         <span class="control-label" for="focusedInput2">Bagian</span>
-        <select name="bagian" class="form-control">
+        {{-- <select name="bagian" class="form-control">
           
           @foreach ($department as $z)
             <option 
@@ -87,7 +87,9 @@
             {{ $z->name }} 
           </option>
           @endforeach
-        </select>
+        </select> --}}
+		      <input class="form-control" value="{{ $permohonan->get_department->id }}" disabled>
+          <input class="form-control" name="bagian" value="{{ $permohonan->bagian }}" type="hidden">
          <p class="help-block"></p>
        </div>	
 

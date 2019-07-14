@@ -64,10 +64,10 @@ class PermohonanController extends Controller
      */
     public function create()
     {
-        $department = DB::table('departments')->get();
+        // $department = DB::table('departments')->get();
  
         // memanggil view tambah
-        return view('permohonan/tambah',['departments' => $department]);
+        return view('permohonan/tambah');
     }
 
     /**
@@ -82,7 +82,7 @@ class PermohonanController extends Controller
         $tambah->user_id = $request['id'];
         $tambah->tgl_pengajuan = $request['tgl_pengajuan'];
         $tambah->tgl_diterima_tsi = $request['tgl_diterima_tsi'];
-        $tambah->bagian = $request['bagian'];
+        $tambah->bagian = Auth::user()->role->department->id;
         $tambah->klasifikasi_perbaikan = $request['klasifikasi_perbaikan'];
 
         // Disini proses mendapatkan judul dan memindahkan letak gambar ke folder image
@@ -127,17 +127,16 @@ class PermohonanController extends Controller
     {
         // mengambil data permohonan berdasarkan id yang dipilih
         // $permohonan = Permohonan::with('get_department')->where('id',$id)->get();
-        $permohonan = DB::table('permohonan')
-                      ->select('permohonan.*', 'departments.id as department', 'departments.name')
+        $permohonan = Permohonan::select('permohonan.*', 'departments.id as department', 'departments.name')
                       ->leftJoin('departments', 'permohonan.bagian', '=', 'departments.id')
                       ->where('permohonan.id', $id)
                       ->first();
         // $permohonan->id;
 
-        $departments = DB::table('departments')->get();
+        // $departments = DB::table('departments')->get();
         // $departments[3]->id
         // passing data permohonan yang didapat ke view edit.blade.php
-        return view('permohonan/edit',['permohonan' => $permohonan, 'department' => $departments]);
+        return view('permohonan/edit',['permohonan' => $permohonan]);
     }
 
     /**

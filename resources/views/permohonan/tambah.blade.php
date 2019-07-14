@@ -43,7 +43,7 @@
 
 		            <div class="form-group label-floating">
 		            	<span class="control-label" for="focusedInput2">Bagian</span>
-		            	<select name="bagian" class="form-control">
+		            	{{-- <select name="bagian" class="form-control">
 		            		@foreach ($departments as $p)
 		            			<option 
 		            				value="{{ $p->id }}"
@@ -54,7 +54,8 @@
 		            				{{ $p->name }}
 		            			</option>
 		            		@endforeach
-		            	</select>
+		            	</select> --}}
+		            	<input class="form-control" value="{{ Auth::user()->role->department->name }}" disabled>
 		           		<p class="help-block"></p>
 		           	</div>	
 
